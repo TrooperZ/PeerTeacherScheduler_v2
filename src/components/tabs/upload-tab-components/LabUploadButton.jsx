@@ -19,8 +19,8 @@ const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
     const validLabs = ['110', '111', '120', '121', '206', '221', '222', '312', '313', '314', '315', '331'];
 
     const deleteLab = (lab) => {
-        console.log(lab);
-        let temp = labs.filter(lab => lab.id === id);
+        // console.log(lab);
+        let temp = labs.filter(elem => elem.course === lab.course && elem.section === lab.section);
         if (temp.pt !== undefined) {
             setPeerTeachers((prevPeerTeachers) => {
                 let updatedPT = prevPeerTeachers.find(pt => pt.uin === temp.pt);
@@ -42,20 +42,24 @@ const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
         const reader = new FileReader();
         reader.onload = (event) => {
             const jsonData = JSON.parse(event.target.result);
-            let updatedLabs = labs;
-            let id = 1;
-            if (updatedLabs.length !== 0) {
-                id = labs[labs.length - 1].id + 1;
-            }
+            // let updatedLabs = labs;
+            let updatedLabs = [];
+            // let id = 1;
+            // if (updatedLabs.length !== 0) {
+            //     id = labs[labs.length - 1].id + 1;
+            // }
             for (const data of jsonData) {
                 if (data.SWV_CLASS_SEARCH_SUBJECT !== 'CSCE') {
                     continue;
                 }
-                let lab = {id: id};
+                // let lab = {id: id};
+                let lab = {};
                 if (!validLabs.includes(data.SWV_CLASS_SEARCH_COURSE)) {
                     continue;
                 }
-                lab.lab = `${data.SWV_CLASS_SEARCH_COURSE} - ${data.SWV_CLASS_SEARCH_SECTION}`;
+                // lab.lab = `${data.SWV_CLASS_SEARCH_COURSE} - ${data.SWV_CLASS_SEARCH_SECTION}`;
+                lab.course = data.SWV_CLASS_SEARCH_COURSE;
+                lab.section = data.SWV_CLASS_SEARCH_SECTION;
                 if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON) {
                     const professorData = JSON.parse(data.SWV_CLASS_SEARCH_INSTRCTR_JSON.replace('\\', ''))
                     // const professorData = data.SWV_CLASS_SEARCH_INSTRCTR_JSON;
@@ -109,24 +113,25 @@ const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                     continue;
                 }
                 
-                // lab.pt = undefined;
-                lab.pt = '931007967'
+                lab.pt = [];
+                lab.maxPTs = 1;
 
                 const duplicates = [];
                 updatedLabs.forEach((elem) => {
-                    if (elem.lab === lab.lab) {
-                        duplicates.push(elem.lab);
+                    if (elem.course === lab.course && elem.section === lab.section) {
+                        duplicates.push(elem.course, elem.section);
                     }
                 });
 
                 duplicates.forEach(deleteLab);
 
-                console.log(lab);
+                // console.log(lab);
 
                 updatedLabs.push(lab);
-                ++id;
+                // ++id;
             }
-            setLabs(updatedLabs);
+            // setLabs(updatedLabs);
+            setLabs((prevLabs) => [...prevLabs, ...updatedLabs]);
         }
         reader.readAsText(file);
     }

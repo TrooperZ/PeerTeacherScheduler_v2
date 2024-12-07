@@ -1,59 +1,77 @@
 import { Box } from '@mui/material';
-import { DataGrid, GridActionsCellItem, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridToolbarContainer, GridToolbarExport, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector } from '@mui/x-data-grid';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 
 const CustomToolbar = () => {
     return (
         <GridToolbarContainer>
-            <GridToolbarExport />
+            <GridToolbarColumnsButton />
+            <GridToolbarFilterButton />
+            <GridToolbarDensitySelector />
+            <GridToolbarExport 
+                csvOptions={{
+                    fileName: 'labs',
+                }}
+            />
         </GridToolbarContainer>
     );
 }
 
 const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
 
-    const deleteLab = (id) => () => {
+    const getRowId = (row) => {
+        return `${row.course} - ${row.section}`;
+    }
+
+    const deleteLab = (course, section) => () => {
         // console.log(row);
         // peerTeachers = peerTeachers.filter(pt => pt.uin !== uin);
         // setPeerTeachers([...peerTeachers])
         // setLabs(labs.map((lab) => lab.pt === uin ? { ...lab, assigned: false, pt: undefined } : lab));
-        let temp = labs.filter(lab => lab.id === id);
-        if (temp.pt !== undefined) {
-            let updatedPT = peerTeachers.find((pt) => pt.uin === temp.pt);
-            updatedPT.hours -= temp.hours;
-            setPeerTeachers(peerTeachers.map((pt) => pt.uin === updatedPT.uin? updatedPT : pt));
+        let temp = labs.filter(lab => lab.course === course && lab.section === section);
+        const lab = temp[0];
+        if (lab.pt !== undefined) {
+            for (const pt of peerTeachers) {
+                if (lab.pt.includes(pt.uin)) {
+                    let updatedPT = pt;
+                    updatedPT.hours -= lab.hours;
+                    // console.log(updatedPT);
+                    setPeerTeachers((prevPeerTeachers) =>
+                        prevPeerTeachers.map((pt) => pt.uin === updatedPT.uin ? updatedPT : pt)
+                    );
+                }
+            }
         }
-        labs = labs.filter(lab => lab.id !== id);
+        labs = labs.filter(lab => !(lab.course === course && lab.section === section));
         setLabs([...labs]);
-
     }
 
     const processRowUpdate = (updatedRow) => {
-        setPeerTeachers(peerTeachers.map((pt) => pt.uin === updatedRow.uin ? updatedRow : pt))
+        setLabs(labs.map((lab) => (lab.course === updatedRow.course && lab.section === updatedRow.section) ? updatedRow : lab))
         return updatedRow;
     }
 
     const columns = [
         {
-            field: 'id',
-            headerName: 'ID',
+            field: 'course',
+            headerName: 'Course',
             headerClassName: 'super-app-theme--header',
             flex: 1,
-            type: 'number',
+            type: 'string',
             align: 'left',
             headerAlign: 'left',
-            minWidth: 50,
-            maxWidth: 50,
+            minWidth: 80,
+            maxWidth: 80,
             editable: false,
-            disableExport: true
+            // disableExport: true
         },
         {
-            field: 'lab',
-            headerName: 'Lab',
+            field: 'section',
+            headerName: 'Section',
             headerClassName: 'super-app-theme--header',
             flex: 1,
-            // minWidth: 50,
-            maxWidth: 110,
+            minWidth: 80,
+            maxWidth: 80,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
@@ -91,24 +109,49 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             headerClassName: 'super-app-theme--header',
             flex: 2,
             width: 220,
+            align: 'left',
+            headerAlign: 'left',
         },
         {
             field: 'pt',
-            headerName: 'Assigned PT',
+            headerName: 'Assigned PT(s)',
             type: 'string',
             headerClassName: 'super-app-theme--header',
             flex: 2,
             width: 220,
+            align: 'left',
+            headerAlign: 'left',
             valueGetter: (value) => {
-                if (!value) {
+                // console.log(value);
+                if (value.length === 0) {
                     return 'UNASSIGNED';
                 }
-                const temp = peerTeachers.find((pt) => pt.uin === value);
-                if (!temp) {
+                let assignedPTs = "";
+                // const temp = peerTeachers.find((pt) => pt.uin === value);
+                for (const pt of peerTeachers) {
+                    // console.log(pt);
+                    if (value.includes(pt.uin)) {
+                        // console.log(pt);
+                        assignedPTs = assignedPTs.concat(`${pt.firstname} ${pt.lastname}\n`);
+                    }
+                }
+                // console.log(assignedPTs);
+                if (assignedPTs.length === 0) {
                     return 'UNASSIGNED';
                 }
-                return `${temp.firstname} ${temp.lastname}`;
+                return assignedPTs.slice(0, assignedPTs.length-1);
             }
+        },
+        {
+            field: 'maxPTs',
+            headerName: 'Max PTs',
+            type: 'number',
+            headerClassName: 'super-app-theme--header',
+            flex: 1,
+            width: 110,
+            align: 'left',
+            headerAlign: 'left',
+            editable: true,
         },
         {
             field: 'actions',
@@ -119,11 +162,12 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             maxWidth: 75,
             cellClassName: 'actions',
             getActions: ({ id, row }) => {
+                // console.log(row);
                 return [
                     <GridActionsCellItem
                         icon={<DeleteIcon />}
                         label={'Delete'}
-                        onClick={deleteLab(id)}
+                        onClick={deleteLab(row.course, row.section)}
                     />
                 ]
             }
@@ -162,6 +206,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                                 paginationModel: { pageSize: 100 }
                             }
                         }}
+                        getRowId={getRowId}
                         getRowHeight={() => 'auto'} // Dynamic Row Height
                         disableColumnMenu
                         disableExtendRowFullWidth

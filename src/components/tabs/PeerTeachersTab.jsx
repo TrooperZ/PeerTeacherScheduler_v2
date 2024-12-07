@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 
 const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
@@ -159,6 +159,9 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
                         onProcessRowUpdateError={(error) => console.log(error)}
                         hideFooterSelectedRowCount
                         pageSizeOptions={[100]}
+                        slots={{
+                            toolbar: GridToolbar,
+                        }}
                     />
                 </div>
             </Box>
