@@ -1,18 +1,6 @@
-import { styled } from '@mui/material/styles';
+import VisuallyHiddenInput from './VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-});
 
 const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
 
@@ -33,7 +21,7 @@ const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
         }
 
         setLabs((prevLabs) => {
-            const updatedLabs = prevLabs.filter(elem => elem.lab !== lab);
+            const updatedLabs = prevLabs.filter(elem => !(elem.course === lab.course && elem.section === lab.section));
             return updatedLabs;
         })
     }
@@ -119,7 +107,7 @@ const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                 const duplicates = [];
                 updatedLabs.forEach((elem) => {
                     if (elem.course === lab.course && elem.section === lab.section) {
-                        duplicates.push(elem.course, elem.section);
+                        duplicates.push(elem);
                     }
                 });
 
