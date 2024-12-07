@@ -21,25 +21,25 @@ const Scheduler = () => {
     const [peerTeachers, setPeerTeachers] = useState([]);
     const [labs, setLabs] = useState([]);
 
-    useEffect(() => {
-        // setPeerTeachers(
-        //     [
-        //         { uin: 1, firstname: "Test", lastname: "LOL", hours: 500, notes: '' },
-        //         { uin: 0, firstname: "ABCD", hours: 500, notes: '' },
-        //         { uin: -12, firstname: 'test', lastname: 'lol', hours: 100, notes: '' },
-        //         { uin: -10, firstname: 'azba', hours: 100, notes: '' },
-        //         { uin: 3, firstname: 'bbbb', hours: 100, notes: '' },
-        //         { uin: 111111111, firstname: 'SUPER LONG NAME OMG WHY IS THIS NAME SO LONG', lastname: 'BRUH', hours: 1000000, notes: 'SUPER DUPER EXTREMELY LONG NOTES HOW IS IT SO LONG OH MAN IT CAN"T FIT ON THE PAGE!!!!!!!!!!!!!11' }
-        //     ]
-        // )
-        // setLabs(
-        //     [
-        //         { id: 1, lab: 'test', },
-        //         { id: 2, lab: 'test2', },
-        //         { id: 3, lab: 'adsfasdf', },
-        //     ]
-        // )
-    }, []);
+    // useEffect(() => {
+    //     // setPeerTeachers(
+    //     //     [
+    //     //         { uin: 1, firstname: "Test", lastname: "LOL", hours: 500, notes: '' },
+    //     //         { uin: 0, firstname: "ABCD", hours: 500, notes: '' },
+    //     //         { uin: -12, firstname: 'test', lastname: 'lol', hours: 100, notes: '' },
+    //     //         { uin: -10, firstname: 'azba', hours: 100, notes: '' },
+    //     //         { uin: 3, firstname: 'bbbb', hours: 100, notes: '' },
+    //     //         { uin: 111111111, firstname: 'SUPER LONG NAME OMG WHY IS THIS NAME SO LONG', lastname: 'BRUH', hours: 1000000, notes: 'SUPER DUPER EXTREMELY LONG NOTES HOW IS IT SO LONG OH MAN IT CAN"T FIT ON THE PAGE!!!!!!!!!!!!!11' }
+    //     //     ]
+    //     // )
+    //     // setLabs(
+    //     //     [
+    //     //         { id: 1, lab: 'test', },
+    //     //         { id: 2, lab: 'test2', },
+    //     //         { id: 3, lab: 'adsfasdf', },
+    //     //     ]
+    //     // )
+    // }, []);
 
     // setLabs()
 

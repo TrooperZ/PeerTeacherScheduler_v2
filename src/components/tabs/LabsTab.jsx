@@ -56,22 +56,23 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             field: 'course',
             headerName: 'Course',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
+            // flex: 1,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
-            minWidth: 80,
-            maxWidth: 80,
+            // minWidth: 80,
+            // maxWidth: 80,
+            width: 80,
             editable: false,
-            // disableExport: true
         },
         {
             field: 'section',
             headerName: 'Section',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
-            minWidth: 80,
-            maxWidth: 80,
+            // flex: 1,
+            // minWidth: 80,
+            // maxWidth: 80,
+            width: 80,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
@@ -81,19 +82,20 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             field: 'time',
             headerName: 'Time',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
+            // flex: 2,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
-            minWidth: 200,
-            maxWidth: 450,
+            // minWidth: 200,
+            // maxWidth: 450,
+            width: 200,
             editable: false,
         },
         {
             field: 'location',
             headerName: 'Location',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
+            // flex: 1,
             // minWidth: 50,
             // maxWidth: 150,
             width: 110,
@@ -107,7 +109,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             headerName: 'Professor',
             type: 'string',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
+            // flex: 2,
             width: 220,
             align: 'left',
             headerAlign: 'left',
@@ -117,8 +119,8 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             headerName: 'Assigned PT(s)',
             type: 'string',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
-            width: 220,
+            // flex: 2,
+            width: 300,
             align: 'left',
             headerAlign: 'left',
             valueGetter: (value) => {
@@ -147,19 +149,20 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             headerName: 'Max PTs',
             type: 'number',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
-            width: 110,
+            // flex: 1,
+            width: 80,
             align: 'left',
             headerAlign: 'left',
             editable: true,
+            disableExport: true
         },
         {
             field: 'actions',
             type: 'actions',
             headerName: 'Delete',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
-            maxWidth: 75,
+            // flex: 2,
+            maxWidth: 70,
             cellClassName: 'actions',
             getActions: ({ id, row }) => {
                 // console.log(row);
@@ -175,24 +178,24 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
     ]
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%', overflow: 'auto' }}>
             <strong style={{ fontSize: 24, marginBottom: 16 }}>Labs</strong>
             <Box
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flex: 1,
-                    width: '100%',
+                    // display: 'flex',
+                    // flexDirection: 'column',
+                    // flex: 1,
+                    height: 600,
+                    width: '70vw',
                     '& .super-app-theme--header': {
                         backgroundColor: '#2E4647', color: 'white', fontWeight: 'bold'
                     },
                     padding: 0,
                     margin: 0,
                     overflow: 'auto',
-
                 }}
             >
-                <div style={{ width: '100%', flex: 1 }}>
+                {/* <div style={{ width: '100%', flex: 1 }}> */}
                     <DataGrid
                         experimentalFeatures={{ ariaV7: true }}
                         // rows={labs.map((lab, i) => ({...lab, id: i+1}))}
@@ -215,6 +218,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                             '& .MuiDataGrid-root': {
                                 overflowX: 'hidden' // Ensures no horizontal scrollbar is visible
                             },
+                            overflowX: 'auto',
                             // fix cell spacing
                             '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px', display: 'flex', alignItems: 'center' },
                             '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px', display: 'flex', alignItems: 'center' },
@@ -231,7 +235,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                             toolbar: CustomToolbar
                         }}
                     />
-                </div>
+                {/* </div> */}
             </Box>
         </div>
     )

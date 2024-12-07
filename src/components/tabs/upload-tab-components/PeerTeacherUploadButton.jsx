@@ -72,7 +72,7 @@ const PeerTeacherUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs 
                 for (const i in days) {
                     const day = days[i].toUpperCase();
                     // console.log(day);
-                    if (day in Object.keys(busyTimes)) {
+                    if (Object.keys(busyTimes).includes(day)) {
                         busyTimes[day].push(times);
                     }
                 }

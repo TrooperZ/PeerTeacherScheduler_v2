@@ -30,9 +30,10 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
             field: 'uin',
             headerName: 'UIN',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
+            // flex: 1,
             // minWidth: 50,
-            maxWidth: 110,
+            // maxWidth: 110,
+            width: 130,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
@@ -43,33 +44,36 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
             field: 'firstname',
             headerName: 'First Name',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
+            // flex: 2,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
-            minWidth: 100,
-            maxWidth: 225,
+            // minWidth: 200,
+            // maxWidth: 200,
+            width: 200,
             editable: false,
         },
         {
             field: 'lastname',
             headerName: 'Last Name',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
+            // flex: 2,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
-            minWidth: 100,
-            maxWidth: 220,
+            // minWidth: 220,
+            // maxWidth: 220,
+            width: 220,
             editable: false,
         },
         {
             field: 'hours',
             headerName: 'Assigned Hours',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
-            // minWidth: 50,
-            maxWidth: 150,
+            // flex: 1,
+            // minWidth: 150,
+            // maxWidth: 150,
+            width: 150,
             type: 'number',
             align: 'left',
             headerAlign: 'left',
@@ -80,9 +84,10 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
             field: 'notes',
             headerName: 'Notes',
             headerClassName: 'super-app-theme--header',
-            flex: 1,
+            // flex: 1,
             // minWidth: 50,
             // maxWidth: 150,
+            width: 195,
             type: 'string',
             align: 'left',
             headerAlign: 'left',
@@ -93,8 +98,8 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
             type: 'actions',
             headerName: 'Delete',
             headerClassName: 'super-app-theme--header',
-            flex: 2,
-            maxWidth: 75,
+            // flex: 2,
+            width: 75,
             cellClassName: 'actions',
             getActions: ({id, row}) => {
                 return [
@@ -113,10 +118,12 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
             <strong style={{ fontSize: 24, marginBottom: 16}}>Peer Teachers</strong>
             <Box
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flex: 1,
-                    width: '100%', 
+                    // display: 'flex',
+                    // flexDirection: 'column',
+                    // flex: 1,
+                    // width: '100%', 
+                    height: 600,
+                    width: '70vw',
                     '& .super-app-theme--header': {
                         backgroundColor: '#2E4647', color: 'white', fontWeight: 'bold'
                     },
@@ -125,7 +132,7 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
                     overflow: 'auto',
                 }}
             >
-                <div style={{ width: '100%', flex: 1 }}>
+                {/* <div style={{ width: '100%', flex: 1 }}> */}
                     <DataGrid 
                         experimentalFeatures={{ariaV7: true}}
                         rows={peerTeachers}
@@ -163,7 +170,7 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
                             toolbar: GridToolbar,
                         }}
                     />
-                </div>
+                {/* </div> */}
             </Box>
         </div>
     )
