@@ -11,6 +11,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import PeerTeachersTab from './tabs/PeerTeachersTab';
 import LabsTab from './tabs/LabsTab';
 import UploadTab from './tabs/UploadTab';
+import AssignTab from './tabs/AssignTab';
 
 import theme from '../theme'
 
@@ -95,7 +96,11 @@ const Scheduler = () => {
                                 setLabs={setLabs}
                             />
                         </TabPanel>
-                        <TabPanel value="4">Item Four</TabPanel>
+                        <TabPanel value="4">
+                            <AssignTab 
+                                peerTeacher={peerTeachers.find((elem, index) => index === 0)}
+                            />
+                        </TabPanel>
                     </TabContext>
                 </Box>
             </Box>
