@@ -31,10 +31,28 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import PTCard from './assign-tab-components/PTCard';
+import LabCard from './assign-tab-components/LabCard';
 
-const AssignTab = ({peerTeacher}) => {
+const AssignTab = ({peerTeacher, lab}) => {
+    // return (
+    //     <>
+    //     <PTCard peerTeacher={peerTeacher}/>
+    //     <LabCard lab={lab} />
+    //     <LabCard lab={lab} peerTeacher={peerTeacher} />
+    //     </>
+    // )
     return (
-        <PTCard peerTeacher={peerTeacher}/>
+        <Grid container columns={3} spacing={2}>
+            <Grid>
+                <PTCard peerTeacher={peerTeacher} />
+            </Grid>
+            <Grid>
+                <LabCard lab={lab} />
+            </Grid>
+            <Grid>
+                <LabCard lab={lab} peerTeacher={peerTeacher} />
+            </Grid>
+        </Grid>
     )
 }
 

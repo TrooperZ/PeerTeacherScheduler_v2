@@ -14,6 +14,7 @@ import UploadTab from './tabs/UploadTab';
 import AssignTab from './tabs/AssignTab';
 
 import theme from '../theme'
+import Layout from './tabs/test';
 
 
 
@@ -21,28 +22,6 @@ const Scheduler = () => {
     const [value, setValue] = useState('1');
     const [peerTeachers, setPeerTeachers] = useState([]);
     const [labs, setLabs] = useState([]);
-
-    // useEffect(() => {
-    //     // setPeerTeachers(
-    //     //     [
-    //     //         { uin: 1, firstname: "Test", lastname: "LOL", hours: 500, notes: '' },
-    //     //         { uin: 0, firstname: "ABCD", hours: 500, notes: '' },
-    //     //         { uin: -12, firstname: 'test', lastname: 'lol', hours: 100, notes: '' },
-    //     //         { uin: -10, firstname: 'azba', hours: 100, notes: '' },
-    //     //         { uin: 3, firstname: 'bbbb', hours: 100, notes: '' },
-    //     //         { uin: 111111111, firstname: 'SUPER LONG NAME OMG WHY IS THIS NAME SO LONG', lastname: 'BRUH', hours: 1000000, notes: 'SUPER DUPER EXTREMELY LONG NOTES HOW IS IT SO LONG OH MAN IT CAN"T FIT ON THE PAGE!!!!!!!!!!!!!11' }
-    //     //     ]
-    //     // )
-    //     // setLabs(
-    //     //     [
-    //     //         { id: 1, lab: 'test', },
-    //     //         { id: 2, lab: 'test2', },
-    //     //         { id: 3, lab: 'adsfasdf', },
-    //     //     ]
-    //     // )
-    // }, []);
-
-    // setLabs()
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -59,12 +38,52 @@ const Scheduler = () => {
                             onChange={handleChange}
                             aria-label="lab API tabs example"
                             orientation="vertical"
-                            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }} // Left-aligned vertically
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                            }} // Left-aligned vertically
                         >
-                            <Tab label="Upload" value="1" />
-                            <Tab label="Peer Teachers" value="2" />
-                            <Tab label="Labs" value="3" />
-                            <Tab label="Assign Labs" value="4" />
+                            <Tab 
+                                label="Upload" 
+                                value="1" 
+                                sx={{
+                                    outline: 'none',
+                                    '&:focus': {
+                                        outline: 'none', // Remove focus outline
+                                    },
+                                }} 
+                            />
+                            <Tab 
+                                label="Peer Teachers" 
+                                value="2"
+                                sx={{
+                                    outline: 'none',
+                                    '&:focus': {
+                                        outline: 'none', // Remove focus outline
+                                    },
+                                }} 
+                            />
+                            <Tab 
+                                label="Labs" 
+                                value="3" 
+                                sx={{
+                                    outline: 'none',
+                                    '&:focus': {
+                                        outline: 'none', // Remove focus outline
+                                    },
+                                }} 
+                            />
+                            <Tab 
+                                label="Assign Labs" 
+                                value="4" 
+                                sx={{
+                                    outline: 'none',
+                                    '&:focus': {
+                                        outline: 'none', // Remove focus outline
+                                    },
+                                }} 
+                            />
                         </TabList>
                     </TabContext>
                 </Box>
@@ -97,9 +116,11 @@ const Scheduler = () => {
                             />
                         </TabPanel>
                         <TabPanel value="4">
-                            <AssignTab 
+                            {/* <AssignTab 
                                 peerTeacher={peerTeachers.find((elem, index) => index === 0)}
-                            />
+                                lab={labs[0]}
+                            /> */}
+                            <Layout />
                         </TabPanel>
                     </TabContext>
                 </Box>

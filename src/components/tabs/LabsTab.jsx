@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridToolbarContainer, GridToolbarExport, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector } from '@mui/x-data-grid';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 
@@ -179,7 +179,10 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%', overflow: 'auto' }}>
-            <strong style={{ fontSize: 24, marginBottom: 16 }}>Labs</strong>
+            {/* <strong style={{ fontSize: 24, marginBottom: 16 }}>Labs</strong> */}
+            <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+                Labs
+            </Typography>
             <Box
                 sx={{
                     // display: 'flex',
@@ -188,7 +191,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                     height: 600,
                     width: '70vw',
                     '& .super-app-theme--header': {
-                        backgroundColor: '#2E4647', color: 'white', fontWeight: 'bold'
+                        backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
                     },
                     padding: 0,
                     margin: 0,

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 
@@ -115,7 +115,12 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
-            <strong style={{ fontSize: 24, marginBottom: 16}}>Peer Teachers</strong>
+            {/* <strong style={{ fontSize: 24, marginBottom: 16}}>
+                Peer Teachers
+            </strong> */}
+            <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+                Peer Teachers
+            </Typography>
             <Box
                 sx={{
                     // display: 'flex',
@@ -125,8 +130,14 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
                     height: 600,
                     width: '70vw',
                     '& .super-app-theme--header': {
-                        backgroundColor: '#2E4647', color: 'white', fontWeight: 'bold'
+                        backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
                     },
+                    // '& .MuiDataGrid-cell--editing': {
+                    //     backgroundColor: '#800000', color: '#FFFFF0'
+                    // },
+                    // '& .MuiDataGrid-cellInput': {
+                    //     backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
+                    // },
                     padding: 0,
                     margin: 0,
                     overflow: 'auto',
@@ -151,13 +162,18 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
                         disableExtendRowFullWidth
                         sx={{
                             width: '100%', // Ensures DataGrid takes full width
-                            '& .MuiDataGrid-root': {
-                                overflowX: 'hidden' // Ensures no horizontal scrollbar is visible
-                            },
+                            // '& .MuiDataGrid-root': {
+                            //     overflowX: 'hidden' // Ensures no horizontal scrollbar is visible
+                            // },
                             // fix cell spacing
                             '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px', display: 'flex', alignItems: 'center' },
                             '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px', display: 'flex', alignItems: 'center' },
                             '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px', display: 'flex', alignItems: 'center' },
+                            // idk why this is the one for editing, but okay
+                            // took way too long to find this :|
+                            '.MuiDataGrid-cell.MuiDataGrid-cell--editing': {
+                                backgroundColor: '#800000', color: '#FFFFF0'
+                            },
                         }}
                         disableColumnResize
                         editMode='cell'

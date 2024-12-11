@@ -10,12 +10,12 @@ import { useState } from 'react';
 import InfoDialog from './InfoDialog';
 
 
-// PT Cards - show name, assigned hours, Info will show busy times, notes
+// show name, assigned hours
+// Info will show busy times, notes
 const PTCard = ({peerTeacher}) => {
     const [ openDialog, setOpenDialog ] = useState(false);
 
     const convertFrom24 = (time) => {
-        let convert = ''
         const temp = time.split(':');
         const hour = parseInt(temp[0]);
         if (hour === 0) {
@@ -92,7 +92,7 @@ const PTCard = ({peerTeacher}) => {
                 onClick={handleCardClick}
             >
                 <Box sx={{ padding: 2 }}>
-                    <Typography variant="h6" component="div">
+                    <Typography variant="h6" component="div" sx={{fontWeight: 'bold'}}>
                         {`${peerTeacher.firstname} ${peerTeacher.lastname}`}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
