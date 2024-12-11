@@ -92,6 +92,16 @@ const theme = createTheme({
                 },
             },
         },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    '& .MuiTypography-root': {
+                        color: '#000000', // Set text color inside Card to black
+                    },
+                    backgroundColor: '#FFFFF0'
+                }
+            }
+        }
         // Add overrides for other components as needed
     },
     mixins: {
