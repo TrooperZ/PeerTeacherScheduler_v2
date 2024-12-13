@@ -35,6 +35,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                 if (lab.pt.includes(pt.uin)) {
                     let updatedPT = pt;
                     updatedPT.hours -= lab.hours;
+                    updatedPT.labs = updatedPT.labs.filter((elem) => elem.course !== course && elem.section !== section);
                     // console.log(updatedPT);
                     setPeerTeachers((prevPeerTeachers) =>
                         prevPeerTeachers.map((pt) => pt.uin === updatedPT.uin ? updatedPT : pt)

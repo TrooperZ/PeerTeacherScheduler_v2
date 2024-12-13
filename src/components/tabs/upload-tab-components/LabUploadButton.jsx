@@ -29,6 +29,7 @@ const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
             setPeerTeachers((prevPeerTeachers) => {
                 let updatedPT = prevPeerTeachers.find(pt => pt.uin === temp.pt);
                 updatedPT.hours -= temp.hours;
+                updatedPT.labs = updatedPT.labs.filter((elem) => elem.course !== course && elem.section !== section);
                 const updatedPeerTeachers = prevPeerTeachers.map(
                     (pt) => pt.uin === updatedPT.uin ? updatedPT : pt
                 );
