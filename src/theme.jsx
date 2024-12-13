@@ -101,6 +101,19 @@ const theme = createTheme({
                     backgroundColor: '#FFFFF0'
                 }
             }
+        },
+        MuiDialog: {
+            styleOverrides: {
+                root: {
+                    '& .MuiTypography-root': {
+                        color: '#000000', // Set text color inside Card to black
+                        backgroundColor: '#FFFFF0'
+                    },
+                },
+                paper: {
+                    backgroundColor: '#FFFFF0', // Set the background color of the dialog content
+                },
+            }
         }
         // Add overrides for other components as needed
     },

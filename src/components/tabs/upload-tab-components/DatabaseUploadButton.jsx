@@ -43,7 +43,31 @@ const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) 
         reader.onload = (event) => {
             const jsonData = JSON.parse(event.target.result);
             setLabs(jsonData.labs);
-            setPeerTeachers(jsonData.peerTeachers);
+            let a = jsonData.peerTeachers;
+            // console.log(a);
+            a.sort((ptA, ptB) => {
+                let lA = ptA.lastname.toLowerCase();
+                let lB = ptB.lastname.toLowerCase();
+                if (lA !== lB) {
+                    // console.log(lA, '<', lB, 'is ', lA < lB);
+                    if (lA < lB) {
+                        return -1;
+                    }
+                    return 1;
+                }
+                lA = ptA.firstname.toLowerCase();
+                lB = ptB.firstname.toLowerCase(); 
+                // return ptA.firstname.toLowerCase() < ptB.firstname.toLowerCase();
+                if (lA < lB) {
+                    return -1;
+                }
+                if (lB < lA) {
+                    return 1;
+                }
+                return 0;
+            });
+            // console.log(a);
+            setPeerTeachers(a);
         }
         reader.readAsText(file);
     }

@@ -17,7 +17,13 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
     const deletePT = (uin) => () => {
         peerTeachers = peerTeachers.filter(pt => pt.uin !== uin);
         setPeerTeachers([ ...peerTeachers ])
-        setLabs(labs.map((lab) => lab.pt === uin ? {...lab, pt: undefined} : lab));
+        setLabs(labs.map((lab) => {
+            if (lab.pt.includes(uin)) {
+                let a = lab.pt.filter((b) => b !== uin);
+                return {...lab, pt: a};
+            }
+            return lab;
+        }));
     }
 
     const processRowUpdate = (updatedRow) => {

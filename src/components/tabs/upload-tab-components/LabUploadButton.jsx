@@ -2,6 +2,22 @@ import VisuallyHiddenInput from './VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
+/*
+
+("{course} - {section}" is used as unique ID)
+lab = {
+    course: string,
+    section: string,
+    professor: string,
+    time: string,       // ex. TR 09:00 AM - 08:00 PM
+    location: string,
+    hours: number,
+    pt: array[uin],
+    maxPTs: number,
+}
+
+*/
+
 const LabUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
 
     const validLabs = ['110', '111', '120', '121', '206', '221', '222', '312', '313', '314', '315', '331'];

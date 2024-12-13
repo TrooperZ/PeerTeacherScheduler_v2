@@ -14,7 +14,6 @@ import UploadTab from './tabs/UploadTab';
 import AssignTab from './tabs/AssignTab';
 
 import theme from '../theme'
-import Layout from './tabs/test';
 
 
 
@@ -116,11 +115,12 @@ const Scheduler = () => {
                             />
                         </TabPanel>
                         <TabPanel value="4">
-                            {/* <AssignTab 
-                                peerTeacher={peerTeachers.find((elem, index) => index === 0)}
-                                lab={labs[0]}
-                            /> */}
-                            <Layout />
+                            <AssignTab
+                                peerTeachers={peerTeachers}
+                                setPeerTeachers={setPeerTeachers}
+                                labs={labs}
+                                setLabs={setLabs}
+                            />
                         </TabPanel>
                     </TabContext>
                 </Box>

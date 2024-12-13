@@ -2,6 +2,28 @@ import VisuallyHiddenInput from './VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
+
+/*
+
+({uin} is used as unique ID)
+peerTeacher = {
+    firstname: string,
+    lastname: string,
+    uin: string,
+    hours: int,
+    busyTimes: {
+        'M': array[string],     // ex. 01:00-14:00
+        'T': array[string],
+        'W': array[string],
+        'R': array[string],
+        'F': array[string],
+        'S': array[string],
+    },
+    labs: array[{ course: string, section: string }]
+}
+
+*/
+
 const PeerTeacherUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
 
     const deletePT = (uin) => {
@@ -16,9 +38,13 @@ const PeerTeacherUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs 
         })
 
         setLabs((prevLabs) => {
-            const updatedLabs = prevLabs.map((lab) =>
-                lab.pt === uin ? { ...lab, assigned: false, pt: undefined } : lab
-            );
+            const updatedLabs = prevLabs.map((lab) => {
+                if (lab.pt.includes(uin)) {
+                    let a = lab.pt.filter((b) => b !== uin);
+                    return { ...lab, pt: a };
+                }
+                return lab;
+            });
             return updatedLabs;
         })
     }
@@ -78,7 +104,32 @@ const PeerTeacherUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs 
                 }
             }
             pt.busyTimes = busyTimes;
-            setPeerTeachers((prevPeerTeachers) => [...prevPeerTeachers, pt])
+            pt.labs = []
+            setPeerTeachers((prevPeerTeachers) => {
+                let a = [...prevPeerTeachers, pt]
+                a.sort((ptA, ptB) => {
+                    let lA = ptA.lastname.toLowerCase();
+                    let lB = ptB.lastname.toLowerCase();
+                    if (lA !== lB) {
+                        // console.log(lA, '<', lB, 'is ', lA < lB);
+                        if (lA < lB) {
+                            return -1;
+                        }
+                        return 1;
+                    }
+                    lA = ptA.firstname.toLowerCase();
+                    lB = ptB.firstname.toLowerCase();
+                    // return ptA.firstname.toLowerCase() < ptB.firstname.toLowerCase();
+                    if (lA < lB) {
+                        return -1;
+                    }
+                    if (lB < lA) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return a;
+            })
         }
         reader.readAsText(file);
     }
