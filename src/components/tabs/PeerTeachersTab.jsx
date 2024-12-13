@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 
-const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
+const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT}) => {
 
     const getRowId = (row) => {
         return row.uin;
@@ -24,6 +24,9 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
             }
             return lab;
         }));
+        if (selectedPT && uin === selectedPT.uin) {
+            setSelectedPT(null);
+        }
     }
 
     const processRowUpdate = (updatedRow) => {
@@ -178,6 +181,9 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs}) => {
                             // idk why this is the one for editing, but okay
                             // took way too long to find this :|
                             '.MuiDataGrid-cell.MuiDataGrid-cell--editing': {
+                                backgroundColor: '#800000', color: '#FFFFF0'
+                            },
+                            '.MuiDataGrid-cell .MuiDataGrid-cell--editing': {
                                 backgroundColor: '#800000', color: '#FFFFF0'
                             },
                         }}

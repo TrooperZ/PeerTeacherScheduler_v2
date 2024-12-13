@@ -1,8 +1,4 @@
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import CardActionArea from '@mui/material/CardActionArea';  // wrap everything in Card with this to simulate button
 import InfoIcon from '@mui/icons-material/Info';
 import { Box, Typography, IconButton, Icon } from '@mui/material';
@@ -12,7 +8,7 @@ import InfoDialog from './InfoDialog';
 
 // show name, assigned hours
 // Info will show busy times, notes
-const PTCard = ({peerTeacher}) => {
+const PTCard = ({peerTeacher, setSelectedPT}) => {
     const [ openDialog, setOpenDialog ] = useState(false);
 
     const convertFrom24 = (time) => {
@@ -39,11 +35,12 @@ const PTCard = ({peerTeacher}) => {
     }
 
     const handleCardClick = () => {
-        console.log("card click");
+        // console.log("card click");
+        setSelectedPT(peerTeacher);
     }
 
     const handleOpenDialog = () => {
-        console.log("info click")
+        // console.log("info click")
         setOpenDialog(true);
     }
 
@@ -67,7 +64,7 @@ const PTCard = ({peerTeacher}) => {
                     timeFormatted = timeFormatted.concat(`${convertFrom24(time24)} - `);
                 }
                 timeFormatted = timeFormatted.slice(0, timeFormatted.length - 3);
-                valueString = valueString.concat(`${timeFormatted}, `);
+                valueString = valueString.concat(`${timeFormatted} | `);
             }
             valueString = valueString.slice(0, valueString.length - 2);
 

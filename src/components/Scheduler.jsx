@@ -21,6 +21,7 @@ const Scheduler = () => {
     const [value, setValue] = useState('1');
     const [peerTeachers, setPeerTeachers] = useState([]);
     const [labs, setLabs] = useState([]);
+    const [selectedPT, setSelectedPT] = useState(null);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -104,6 +105,8 @@ const Scheduler = () => {
                                 setPeerTeachers={setPeerTeachers}
                                 labs={labs}
                                 setLabs={setLabs}
+                                selectedPT={selectedPT}
+                                setSelectedPT={setSelectedPT}
                             />
                         </TabPanel>
                         <TabPanel value="3">
@@ -120,6 +123,8 @@ const Scheduler = () => {
                                 setPeerTeachers={setPeerTeachers}
                                 labs={labs}
                                 setLabs={setLabs}
+                                selectedPT={selectedPT}
+                                setSelectedPT={setSelectedPT}
                             />
                         </TabPanel>
                     </TabContext>

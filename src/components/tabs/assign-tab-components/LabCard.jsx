@@ -1,6 +1,6 @@
 import Card from '@mui/material/Card';
 import InfoIcon from '@mui/icons-material/Info';
-import { Box, Typography, IconButton, Icon } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import InfoDialog from './InfoDialog';
 // Info will show location, hours
 // Will have two states depending on if assigned or not (+, -)
 // uses whether peerTeacher is undefined to differentiate
-const LabCard = ({lab, peerTeacher}) => {
+const LabCard = ({lab, peerTeacher, addLab, removeLab}) => {
     const [ openDialog, setOpenDialog ] = useState(false);
 
     const generateContent = () => {
@@ -18,7 +18,7 @@ const LabCard = ({lab, peerTeacher}) => {
     }
 
     const handleOpenDialog = () => {
-        console.log('info click')
+        // console.log('info click')
         setOpenDialog(true);
     }
 
@@ -27,11 +27,13 @@ const LabCard = ({lab, peerTeacher}) => {
     }
 
     const handleAdd = () => {
-        console.log('add')
+        // console.log('add')
+        addLab(lab);
     }
 
     const handleRemove = () => {
-        console.log('remove');
+        // console.log('remove');
+        removeLab(lab);
     }
 
     return (

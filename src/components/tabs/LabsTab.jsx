@@ -143,7 +143,13 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                     return 'UNASSIGNED';
                 }
                 return assignedPTs.slice(0, assignedPTs.length-1);
-            }
+            },
+            renderCell: (params) => {
+                const textWithLineBreaks = params.value.split('\n').map((line, index) => (
+                    <div key={index}>{line}</div>
+                ));
+                return <div>{textWithLineBreaks}</div>;
+            },
         },
         {
             field: 'maxPTs',
@@ -227,6 +233,12 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                             '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px', display: 'flex', alignItems: 'center' },
                             '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px', display: 'flex', alignItems: 'center' },
                             '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px', display: 'flex', alignItems: 'center' },
+                            '.MuiDataGrid-cell.MuiDataGrid-cell--editing': {
+                                backgroundColor: '#800000', color: '#FFFFF0'
+                            },
+                            '.MuiDataGrid-cell .MuiDataGrid-cell--editing': {
+                                backgroundColor: '#800000', color: '#FFFFF0'
+                            },
                         }}
                         disableColumnResize
                         editMode='cell'
