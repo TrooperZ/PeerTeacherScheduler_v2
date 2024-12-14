@@ -25,7 +25,7 @@ const DatabaseDialogButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, se
                 onClose={() => setOpenDialog(false)}
                 title={"Upload Database"}
                 content={{
-                    'Warning': 'If sucessful, this will overwrite the current Database. Make sure to save the current Databse before uploading another Database'
+                    'Warning': 'If sucessful, this will overwrite the current Database. Make sure to save the current Database before uploading another Database'
                 }}
                 UploadButton={DatabaseUploadButton}
                 peerTeachers={peerTeachers}

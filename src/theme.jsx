@@ -126,7 +126,7 @@ const theme = createTheme({
         },
     },
     typography: {
-        allVariants: {
+        h5: {
             color: '#FFFFF0', // Change the color of all text elements
         },
     },
