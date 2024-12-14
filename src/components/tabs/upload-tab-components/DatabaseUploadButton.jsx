@@ -2,7 +2,7 @@ import VisuallyHiddenInput from './VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
+const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, setLoading, setCompleted, setError, selectedPT, setSelectedPT }) => {
 
     const deletePT = (uin) => {
         setPeerTeachers((prevPeerTeachers) => {
@@ -16,6 +16,10 @@ const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) 
             );
             return updatedLabs;
         })
+
+        if (selectedPT && uin === selectedPT.uin) {
+            setSelectedPT(null);
+        }
     }
 
     const deleteLab = (lab) => {
@@ -41,38 +45,67 @@ const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs }) 
     const parseFile = (file) => {
         const reader = new FileReader();
         reader.onload = (event) => {
-            const jsonData = JSON.parse(event.target.result);
-            setLabs(jsonData.labs);
-            let a = jsonData.peerTeachers;
-            // console.log(a);
-            a.sort((ptA, ptB) => {
-                let lA = ptA.lastname.toLowerCase();
-                let lB = ptB.lastname.toLowerCase();
-                if (lA !== lB) {
-                    // console.log(lA, '<', lB, 'is ', lA < lB);
+            try {
+                const jsonData = JSON.parse(event.target.result);
+                let b = jsonData.labs;
+                b.sort((labA, labB) => {
+                    let cA = labA.course.toLowerCase();
+                    let cB = labB.course.toLowerCase();
+                    if (cA !== cB) {
+                        return cA < cB ? -1 : 1;
+                    }
+                    cA = labA.section.toLowerCase();
+                    cB = labB.section.toLowerCase();
+                    if (cA < cB) {
+                        return -1;
+                    }
+                    if (cB < cA) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                setLabs(b);
+
+                let a = jsonData.peerTeachers;
+                // console.log(a);
+                a.sort((ptA, ptB) => {
+                    let lA = ptA.lastname.toLowerCase();
+                    let lB = ptB.lastname.toLowerCase();
+                    if (lA !== lB) {
+                        // console.log(lA, '<', lB, 'is ', lA < lB);
+                        if (lA < lB) {
+                            return -1;
+                        }
+                        return 1;
+                    }
+                    lA = ptA.firstname.toLowerCase();
+                    lB = ptB.firstname.toLowerCase(); 
+                    // return ptA.firstname.toLowerCase() < ptB.firstname.toLowerCase();
                     if (lA < lB) {
                         return -1;
                     }
-                    return 1;
-                }
-                lA = ptA.firstname.toLowerCase();
-                lB = ptB.firstname.toLowerCase(); 
-                // return ptA.firstname.toLowerCase() < ptB.firstname.toLowerCase();
-                if (lA < lB) {
-                    return -1;
-                }
-                if (lB < lA) {
-                    return 1;
-                }
-                return 0;
-            });
+                    if (lB < lA) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                setPeerTeachers(a);
+                setSelectedPT(null);
+            }
+            catch (e) {
+                // console.log(e)
+                setError(true);
+            }
             // console.log(a);
-            setPeerTeachers(a);
+            setLoading(false);
+            setCompleted(true);
         }
         reader.readAsText(file);
     }
 
     const handleFile = (event) => {
+        setLoading(true);
+        setError(false);
         // console.log(event.target.files)
         // console.log(event.target.files[0])
         const file = event.target.files[0];

@@ -97,6 +97,8 @@ const Scheduler = () => {
                                 setPeerTeachers={setPeerTeachers}
                                 labs={labs}
                                 setLabs={setLabs}
+                                selectedPT={selectedPT}
+                                setSelectedPT={setSelectedPT}
                             />
                         </TabPanel>
                         <TabPanel value="2">
