@@ -8,7 +8,7 @@ import InfoDialog from './InfoDialog';
 
 // show name, assigned hours
 // Info will show busy times, notes
-const PTCard = ({peerTeacher, setSelectedPT}) => {
+const PTCard = ({peerTeacher, setSelectedPT, available}) => {
     const [ openDialog, setOpenDialog ] = useState(false);
 
     const convertFrom24 = (time) => {
@@ -75,7 +75,20 @@ const PTCard = ({peerTeacher, setSelectedPT}) => {
 
     return (
         <>
-        <Card sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+        <Card 
+            sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                width: '100%', 
+                backgroundColor: available ? '#000000' : '#FFFFF0',
+                '& .MuiTypography-root': {
+                    color: available ? '#FFFFF0' : '#000000', // Set text color inside Card to black
+                },
+                '& .MuiSvgIcon-root': {
+                    color: available ? '#FFFFF0' : '#000000',
+                }
+            }}
+        >
             <CardActionArea
                 sx={{
                     display: 'flex', 

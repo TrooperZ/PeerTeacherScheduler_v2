@@ -2,7 +2,8 @@ import Box from '@mui/material/Box';
 
 import PTCard from './assign-tab-components/PTCard';
 import LabCard from './assign-tab-components/LabCard';
-import { Stack, Divider, Typography } from '@mui/material';
+import { Stack, Divider, Typography, Container } from '@mui/material';
+import UnassignedLabCard from './assign-tab-components/UnassignedLabCard';
 
 const dayToWeekdayMap = {
     'M': '07/21/2003',
@@ -13,15 +14,18 @@ const dayToWeekdayMap = {
     'S': '07/26/2003',
 }
 
-const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT}) => {
+const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT, selectedLab, setSelectedLab}) => {
 
-    const isPossibleLab = (lab) => {
+    const isPossibleLab = (lab, pt) => {
+        if (!lab) {
+            return false;
+        }
         if (lab.pt.length >= lab.maxPTs) {
             return false;
         }
         let assignedLabs = [];
         labs.forEach((possibleLab) => {
-            selectedPT.labs.forEach((assignedLab) => {
+            pt.labs.forEach((assignedLab) => {
                 if (possibleLab.course === assignedLab.course && possibleLab.section === assignedLab.section) {
                     assignedLabs.push(possibleLab);
                 }
@@ -37,12 +41,12 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
         const endTime = startEndSplit[1].trim();
         // console.log(startEndSplit);
         for (const day of days) {
-            if (selectedPT.busyTimes[day].length === 0) {
+            if (pt.busyTimes[day].length === 0) {
                 continue;
             }
             const checkTimeStart = new Date(`${dayToWeekdayMap[day]} ${startTime}`);
             const checkTimeEnd = new Date(`${dayToWeekdayMap[day]} ${endTime}`);
-            for (const timeRange of selectedPT.busyTimes[day]) {
+            for (const timeRange of pt.busyTimes[day]) {
                 const timeRangeSplit = timeRange.split('-');
                 const ptBusyStart = new Date(`${dayToWeekdayMap[day]} ${timeRangeSplit[0]}`);
                 const ptBusyEnd = new Date(`${dayToWeekdayMap[day]} ${timeRangeSplit[1]}`);
@@ -80,7 +84,7 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
         if (selectedPT) {
             let possibleLabs = [];
             for (const lab of labs) {
-                if (isPossibleLab(lab)) {
+                if (isPossibleLab(lab, selectedPT)) {
                     possibleLabs.push(lab);
                 }
             }
@@ -138,6 +142,37 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
         return [];
     }
 
+    const getUnassignedLabs = () => {
+        let unassignedLabs = [];
+        for (const lab of labs) {
+            // console.log(lab.pt.length, '<', labs)
+            if (lab.pt.length < lab.maxPTs) {
+                unassignedLabs.push(lab);
+            }
+        }
+
+        unassignedLabs.sort((labA, labB) => {
+            let cA = labA.course.toLowerCase();
+            let cB = labB.course.toLowerCase();
+            if (cA !== cB) {
+                return cA < cB ? -1 : 1;
+            }
+            cA = labA.section.toLowerCase();
+            cB = labB.section.toLowerCase();
+            if (cA < cB) {
+                return -1;
+            }
+            if (cB < cA) {
+                return 1;
+            }
+            return 0;
+        });
+
+        // console.log(unassignedLabs);
+
+        return unassignedLabs;
+    }
+
     const addLabToPT = (lab) => {
         let uin = selectedPT.uin;
         lab.pt.push(uin);
@@ -161,10 +196,12 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
     }
 
     return (
+        <>
         <Box
             sx={{
                 backgroundColor: '#510000',
                 padding: '10px 50px 10px 50px',
+                marginBottom: '10px',
                 // height: 600,
                 width: '900px',
                 overflow: 'hidden',
@@ -200,7 +237,7 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                         >
                             {
                                 Object.values(peerTeachers).map((peerTeacher, i) => {
-                                    return <PTCard key={i} peerTeacher={peerTeacher} setSelectedPT={setSelectedPT} />
+                                    return <PTCard key={i} peerTeacher={peerTeacher} setSelectedPT={setSelectedPT} available={isPossibleLab(selectedLab, peerTeacher)} />
                                 })
                             }
                         </Stack>
@@ -266,6 +303,52 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                 </Stack>
             </Stack>
         </Box>
+        <Box
+            sx={{
+                padding: '10px 50px 10px 50px',
+                width: '900px',
+                // overflow: 'auto',
+                alignItems: 'center',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                margin: 0,
+            }}
+        >
+            <Typography variant='h5' component="div" sx={{ fontWeight: 'bold', alignContent: 'center', textAlign: 'center' }}>
+                Unassigned Labs
+            </Typography>
+                {
+                    getUnassignedLabs().length === 0 ?
+                        <Typography variant='h6' component="div" sx={{ fontWeight: 'bold', color: '#FFFFF0' }}>
+                            None
+                        </Typography>
+                    :
+                        <Box
+                            sx={{
+                                flexDirection: 'row', // Ensures items are aligned in a single row
+                                display: 'flex', // Makes the Box a flex container
+                                overflow: 'auto', // Enables horizontal scrolling if the items overflow
+                                width: '100%', // Set the width to ensure it takes up the full container width
+                                gap: 2, // Optional: Adds spacing between the items
+                                flexShrink: 0,
+                                flexWrap: 'wrap',
+                                // alignContent: 'center',
+                                justifyContent: 'center',
+                                margin: 0,
+                                padding: 0,
+                                marginTop: '20px',
+                            }}
+                        >
+                            {
+                                Object.values(getUnassignedLabs()).map((lab, i) => {
+                                    return <UnassignedLabCard key={i} lab={lab} selectedLab={selectedLab} setSelectedLab={setSelectedLab} />
+                                })
+                            }
+                        </Box>
+                }
+        </Box>
+        </>
     )
 }
 
