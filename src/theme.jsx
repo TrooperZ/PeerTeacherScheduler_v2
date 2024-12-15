@@ -90,6 +90,11 @@ const theme = createTheme({
                         },
                     },
                 },
+                toolbarContainer: {
+                    '& .MuiSvgIcon-root': {
+                        color: '#FFFFF0',
+                    },
+                }
             },
         },
         MuiCard: {
@@ -114,6 +119,27 @@ const theme = createTheme({
                     backgroundColor: '#FFFFF0', // Set the background color of the dialog content
                 },
             }
+        },
+        MuiCheckbox: {
+            styleOverrides: {
+                root: {
+                    color: '#000000',
+                }
+            }
+        },
+        MuiButtonBase: {
+            styleOverrides: {
+                root: {
+                    color: '#000000',
+                }
+            }
+        },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: '#000000',
+                }
+            },
         }
         // Add overrides for other components as needed
     },
