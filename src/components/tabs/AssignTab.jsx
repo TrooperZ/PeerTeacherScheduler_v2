@@ -166,7 +166,7 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                 backgroundColor: '#510000',
                 padding: '10px 50px 10px 50px',
                 // height: 600,
-                width: '60vw',
+                width: '900px',
                 overflow: 'hidden',
             }}
         >
@@ -181,7 +181,12 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                     }}
                 >
                     <Typography variant="h5" component="div" sx={{fontWeight: 'bold'}}>
-                        Peer Teacher
+                        {
+                            selectedPT ? 
+                                `${selectedPT.firstname} ${selectedPT.lastname}`
+                            :
+                                'Peer Teacher'
+                        }
                     </Typography>
                     <Divider flexItem sx={{ backgroundColor: '#211306', height: '4px', margin: '5px' }} />
                     <Box
@@ -210,7 +215,7 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                     }}
                 >
                     <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                        Labs
+                        Possible Labs
                     </Typography>
                     <Divider flexItem sx={{ backgroundColor: '#211306', height: '4px', margin: '5px' }} />
                     <Box

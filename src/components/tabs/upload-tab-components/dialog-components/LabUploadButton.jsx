@@ -1,4 +1,4 @@
-import VisuallyHiddenInput from './VisuallyHiddenInput';
+import VisuallyHiddenInput from '../VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 

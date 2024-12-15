@@ -137,7 +137,7 @@ const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selected
                     // flex: 1,
                     // width: '100%', 
                     height: 600,
-                    width: '70vw',
+                    width: '1000px',
                     '& .super-app-theme--header': {
                         backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
                     },

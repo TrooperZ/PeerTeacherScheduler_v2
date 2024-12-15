@@ -196,7 +196,7 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                     // flexDirection: 'column',
                     // flex: 1,
                     height: 600,
-                    width: '70vw',
+                    width: '1000px',
                     '& .super-app-theme--header': {
                         backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
                     },

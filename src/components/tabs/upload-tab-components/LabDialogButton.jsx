@@ -3,7 +3,7 @@ import UploadDialog from "./UploadDialog";
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from "react";
-import LabUploadButton from "./LabUploadButton";
+import LabUploadButton from "./dialog-components/LabUploadButton";
 
 const LabDialogButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT }) => {
     const [openDialog, setOpenDialog] = useState(false);
@@ -25,7 +25,8 @@ const LabDialogButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, selecte
                 onClose={() => setOpenDialog(false)}
                 title={"Upload Labs"}
                 content={{
-                    'Warning': 'In the event of duplicate Labs, the Lab will be overwritten'
+                    'Notes': 'Upload the JSON file retrieved from the Howdy endpoint',
+                    'Warning': 'In the event of duplicate Labs, the Lab will be overwritten',
                 }}
                 UploadButton={LabUploadButton}
                 peerTeachers={peerTeachers}

@@ -3,7 +3,7 @@ import UploadDialog from "./UploadDialog";
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from "react";
-import DatabaseUploadButton from "./DatabaseUploadButton";
+import DatabaseUploadButton from "./dialog-components/DatabaseUploadButton";
 
 const DatabaseDialogButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT }) => {
     const [openDialog, setOpenDialog] = useState(false);
@@ -25,6 +25,7 @@ const DatabaseDialogButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, se
                 onClose={() => setOpenDialog(false)}
                 title={"Upload Database"}
                 content={{
+                    'Notes': 'Upload the JSON file downloaded from the "Download Database" button',
                     'Warning': 'If sucessful, this will overwrite the current Database. Make sure to save the current Database before uploading another Database'
                 }}
                 UploadButton={DatabaseUploadButton}

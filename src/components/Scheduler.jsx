@@ -28,7 +28,7 @@ const Scheduler = () => {
     };
 
     return (
-        <div style={{ color: "black", width: '90vw', height: '100vh', display: 'flex'}}>
+        <div style={{ color: "black", width: '1300px', height: '700px', display: 'flex'}}>
         <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', width: '100%', flex: 1 }}>
                 {/* Tab List Section - Left side of screen */}
