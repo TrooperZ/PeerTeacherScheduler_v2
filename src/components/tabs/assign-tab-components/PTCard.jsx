@@ -68,7 +68,7 @@ const PTCard = ({peerTeacher, setSelectedPT, available}) => {
             }
             valueString = valueString.slice(0, valueString.length - 2);
 
-            busyTimesFormatted = busyTimesFormatted.concat(`${key}: ${valueString}\n`)
+            busyTimesFormatted = busyTimesFormatted.concat(`${key}: ${valueString}\n\n`)
         }
         return {'Busy Times': busyTimesFormatted.trim(), 'Notes': peerTeacher.notes ? peerTeacher.notes : 'None'};
     }

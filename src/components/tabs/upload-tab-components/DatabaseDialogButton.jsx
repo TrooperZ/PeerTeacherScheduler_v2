@@ -26,7 +26,7 @@ const DatabaseDialogButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, se
                 title={"Upload Database"}
                 content={{
                     'Notes': 'Upload the JSON file downloaded from the "Download Database" button',
-                    'Warning': 'If sucessful, this will overwrite the current Database. Make sure to save the current Database before uploading another Database'
+                    'Warning': 'If successful, this will overwrite the current Database. Make sure to save the current Database before uploading another Database'
                 }}
                 UploadButton={DatabaseUploadButton}
                 peerTeachers={peerTeachers}

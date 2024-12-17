@@ -27,7 +27,7 @@ const DatabaseDownloadButton = ({ peerTeachers, labs }) => {
             // download={'database.json'}
             onClick={handleDownload}
         >
-            Download Database Robert Was Here
+            Download Database
         </Button>
     );
 }

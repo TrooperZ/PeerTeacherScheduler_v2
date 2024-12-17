@@ -53,7 +53,8 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                 // console.log(ptBusyEnd, '<', checkTimeStart, 'is', ptBusyEnd < checkTimeStart)
                 // console.log(ptBusyStart, '>', checkTimeEnd, 'is', ptBusyStart > checkTimeEnd)
                 if (!(ptBusyEnd < checkTimeStart || ptBusyStart > checkTimeEnd)) {
-                    // console.log("failed check");
+                    console.log(ptBusyEnd, '<', checkTimeStart, '||', ptBusyStart, '>', checkTimeEnd);
+                    // console.log(`${lab.course} - ${lab.section} failed check: hours`);
                     return false;
                 }
             }
@@ -70,7 +71,7 @@ const AssignTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, se
                     const assignedCheckTimeStart = new Date(`${dayToWeekdayMap[assignedDay]} ${assignedStartTime}`);
                     const assignedCheckTimeEnd = new Date(`${dayToWeekdayMap[assignedDay]} ${assignedEndTime}`);
                     if (!(assignedCheckTimeEnd < checkTimeStart || assignedCheckTimeStart > checkTimeEnd)) {
-                        // console.log("failed check");
+                        // console.log(`${lab.course} - ${lab.section} failed check: lab`);
                         return false;
                     }
                 }
