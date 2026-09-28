@@ -3,7 +3,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
-import database from '../../database.json';
+import { COURSE_CATALOG } from '../data/courseCatalog';
 import { buildPtSubmission, clamp, hasDragIntent, minutesToTime, PT_DAYS, snapMinutes, timeToMinutes } from '../utils/ptDataGenerator';
 
 const DAY_NAMES = { M: 'Monday', T: 'Tuesday', W: 'Wednesday', R: 'Thursday', F: 'Friday' };
@@ -191,8 +191,8 @@ const BusyCalendar = ({ slots, setSlots }) => {
 };
 
 const PtDataGenerator = () => {
-    const courses = useMemo(() => [...new Set(database.labs.map((lab) => lab.course))].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })), []);
-    const professorsByCourse = useMemo(() => Object.fromEntries(courses.map((course) => [course, [...new Set(database.labs.filter((lab) => lab.course === course).map((lab) => lab.professor?.replace(/\s*\(P\)\s*$/, '')).filter(Boolean))].sort()])), [courses]);
+    const courses = useMemo(() => Object.keys(COURSE_CATALOG).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })), []);
+    const professorsByCourse = COURSE_CATALOG;
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [uin, setUin] = useState('');

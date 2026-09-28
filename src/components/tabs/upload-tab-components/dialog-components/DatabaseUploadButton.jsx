@@ -2,6 +2,9 @@ import VisuallyHiddenInput from '../VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { addCourseColors } from '../../../../utils/schedule';
+import { parseScheduleDatabase } from '../../../../utils/importData';
+
+const MAX_DATABASE_BYTES = 5 * 1024 * 1024;
 
 const DatabaseUploadButton = ({ setPeerTeachers, setLabs, setLoading, setCompleted, setError, setSelectedPT }) => {
 
@@ -9,7 +12,7 @@ const DatabaseUploadButton = ({ setPeerTeachers, setLabs, setLoading, setComplet
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
-                const jsonData = JSON.parse(event.target.result);
+                const jsonData = parseScheduleDatabase(event.target.result);
                 let b = jsonData.labs;
                 b.sort((labA, labB) => {
                     let cA = labA.course.toLowerCase();
@@ -72,6 +75,12 @@ const DatabaseUploadButton = ({ setPeerTeachers, setLabs, setLoading, setComplet
         // console.log(event.target.files)
         // console.log(event.target.files[0])
         const file = event.target.files[0];
+        if (!file || file.size > MAX_DATABASE_BYTES) {
+            setLoading(false);
+            setCompleted(true);
+            setError(true);
+            return;
+        }
         parseFile(file);
     }
 

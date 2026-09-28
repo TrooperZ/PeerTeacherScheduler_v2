@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
+import { parseScheduleDatabase } from '../utils/importData';
+
+const MAX_DATABASE_BYTES = 5 * 1024 * 1024;
 
 const sortLabs = (labs) => labs.sort((a, b) =>
     a.course.localeCompare(b.course) || a.section.localeCompare(b.section)
@@ -17,10 +20,8 @@ const WelcomeScreen = ({ onDatabaseLoaded, onStartNew }) => {
         if (!file) return;
 
         try {
-            const database = JSON.parse(await file.text());
-            if (!Array.isArray(database.labs) || !Array.isArray(database.peerTeachers)) {
-                throw new Error('Invalid database');
-            }
+            if (file.size > MAX_DATABASE_BYTES) throw new Error('Database file is too large.');
+            const database = parseScheduleDatabase(await file.text());
 
             onDatabaseLoaded({
                 labs: sortLabs(database.labs),

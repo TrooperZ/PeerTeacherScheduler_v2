@@ -2,6 +2,20 @@ import { addCourseColors } from './schedule.js';
 
 export const VALID_LAB_COURSES = ['110', '111', '120', '121', '206', '221', '222', '312', '313', '314', '315', '331'];
 
+const isRecord = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+
+export const parseScheduleDatabase = (text) => {
+    const database = JSON.parse(text);
+    if (!isRecord(database) || !Array.isArray(database.labs) || !Array.isArray(database.peerTeachers)) {
+        throw new Error('Invalid database.');
+    }
+    if (!database.labs.every((lab) => isRecord(lab) && typeof lab.course === 'string' && typeof lab.section === 'string')
+        || !database.peerTeachers.every((pt) => isRecord(pt) && typeof pt.firstname === 'string' && typeof pt.lastname === 'string')) {
+        throw new Error('Invalid database records.');
+    }
+    return database;
+};
+
 const sortPeerTeachers = (peerTeachers) => [...peerTeachers].sort((a, b) =>
     a.lastname.localeCompare(b.lastname) || a.firstname.localeCompare(b.firstname)
 );

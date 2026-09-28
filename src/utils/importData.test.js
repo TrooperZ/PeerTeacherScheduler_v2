@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { courseRequestOptions, getLabConfigurationOptions, mergePeerTeachers, parseLabs, parsePeerTeacher } from './importData.js';
+import { courseRequestOptions, getLabConfigurationOptions, mergePeerTeachers, parseLabs, parsePeerTeacher, parseScheduleDatabase } from './importData.js';
 
 test('parses configured PT JSON and replaces duplicate UINs', () => {
     const pt = parsePeerTeacher(JSON.stringify({ firstname: ' Amin ', lastname: ' Karic ', uin: '123', busyTimes: { M: ['09:00-10:00'] } }));
@@ -35,6 +35,12 @@ test('builds editable GET and POST course requests', () => {
     assert.equal(courseRequestOptions('GET', 'not used').body, undefined);
     assert.deepEqual(JSON.parse(courseRequestOptions('POST', '{"termCode":"202631"}').body), { termCode: '202631' });
     assert.throws(() => courseRequestOptions('POST', '{invalid}'));
+});
+
+test('rejects malformed schedule databases before the UI consumes them', () => {
+    assert.throws(() => parseScheduleDatabase('{"labs":[{}],"peerTeachers":[]}'));
+    assert.throws(() => parseScheduleDatabase('{"labs":[],"peerTeachers":[{}]}'));
+    assert.deepEqual(parseScheduleDatabase('{"labs":[{"course":"120","section":"500"}],"peerTeachers":[{"firstname":"Ada","lastname":"Lovelace"}]}').labs.length, 1);
 });
 
 test('builds honors and unique course-professor configuration options', () => {
