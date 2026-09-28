@@ -1,0 +1,43 @@
+{
+  "firstname": "Zoe",
+  "lastname": "Wilson",
+  "uin": "900000113",
+  "desiredLabHours": 3,
+  "classesCanPT": [
+    "120",
+    "312",
+    "313"
+  ],
+  "preferredClasses": [
+    "120",
+    "312"
+  ],
+  "busyTimes": {
+    "M": [
+      "09:10-10:00",
+      "13:50-15:05"
+    ],
+    "T": [
+      "11:10-12:25"
+    ],
+    "W": [
+      "09:10-10:00",
+      "13:50-15:05"
+    ],
+    "R": [
+      "11:10-12:25"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "120": [
+      "Calvin J. Beideman"
+    ],
+    "312": [
+      "Rabinarayan Mahapatra"
+    ],
+    "313": [
+      "Sandeep Kumar"
+    ]
+  }
+}

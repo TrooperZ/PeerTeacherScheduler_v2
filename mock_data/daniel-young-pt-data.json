@@ -1,0 +1,44 @@
+{
+  "firstname": "Daniel",
+  "lastname": "Young",
+  "uin": "900000126",
+  "desiredLabHours": 6,
+  "classesCanPT": [
+    "120",
+    "206",
+    "312"
+  ],
+  "preferredClasses": [
+    "206"
+  ],
+  "busyTimes": {
+    "M": [
+      "10:20-11:10"
+    ],
+    "T": [
+      "08:00-09:15",
+      "14:20-15:35"
+    ],
+    "W": [
+      "10:20-11:10"
+    ],
+    "R": [
+      "08:00-09:15",
+      "14:20-15:35"
+    ],
+    "F": [
+      "12:40-13:30"
+    ]
+  },
+  "professorsHad": {
+    "120": [
+      "Martin Carlisle"
+    ],
+    "206": [
+      "Zbigniew Leyk"
+    ],
+    "312": [
+      "Rabinarayan Mahapatra"
+    ]
+  }
+}

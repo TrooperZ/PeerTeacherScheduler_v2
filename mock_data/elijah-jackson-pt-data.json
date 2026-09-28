@@ -1,0 +1,42 @@
+{
+  "firstname": "Elijah",
+  "lastname": "Jackson",
+  "uin": "900000118",
+  "desiredLabHours": 3,
+  "classesCanPT": [
+    "120",
+    "221",
+    "331"
+  ],
+  "preferredClasses": [
+    "331"
+  ],
+  "busyTimes": {
+    "M": [
+      "09:10-11:10"
+    ],
+    "T": [
+      "15:55-17:10"
+    ],
+    "W": [
+      "09:10-11:10"
+    ],
+    "R": [
+      "15:55-17:10"
+    ],
+    "F": [
+      "13:50-14:40"
+    ]
+  },
+  "professorsHad": {
+    "120": [
+      "Zbigniew Leyk"
+    ],
+    "221": [
+      "Shinjiro Sueda"
+    ],
+    "331": [
+      "Paul P. Taele"
+    ]
+  }
+}

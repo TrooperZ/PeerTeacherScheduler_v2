@@ -1,0 +1,42 @@
+{
+  "firstname": "Mateo",
+  "lastname": "Rodriguez",
+  "uin": "900000112",
+  "desiredLabHours": 2,
+  "classesCanPT": [
+    "110",
+    "111",
+    "120"
+  ],
+  "preferredClasses": [
+    "120"
+  ],
+  "busyTimes": {
+    "M": [
+      "09:10-11:10"
+    ],
+    "T": [
+      "15:55-17:10"
+    ],
+    "W": [
+      "09:10-11:10"
+    ],
+    "R": [
+      "15:55-17:10"
+    ],
+    "F": [
+      "13:50-14:40"
+    ]
+  },
+  "professorsHad": {
+    "110": [
+      "Ki Hwan K. Yum"
+    ],
+    "111": [
+      "Muhammad S. Mahmood"
+    ],
+    "120": [
+      "Martin Carlisle"
+    ]
+  }
+}

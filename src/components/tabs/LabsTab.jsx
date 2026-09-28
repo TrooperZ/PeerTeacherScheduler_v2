@@ -1,260 +1,136 @@
+import { useMemo, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { DataGrid, GridActionsCellItem, GridToolbarContainer, GridToolbarExport, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector } from '@mui/x-data-grid';
-import { Delete as DeleteIcon } from '@mui/icons-material';
-
-const CustomToolbar = () => {
-    return (
-        <GridToolbarContainer>
-            <GridToolbarColumnsButton />
-            <GridToolbarFilterButton />
-            <GridToolbarDensitySelector />
-            <GridToolbarExport 
-                csvOptions={{
-                    fileName: 'labs',
-                }}
-            />
-        </GridToolbarContainer>
-    );
-}
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
+import LabsCalendar from './LabsCalendar';
+import LabEditor from '../LabEditor';
 
 const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
+    const courses = useMemo(() => [...new Set(labs.map(({ course }) => course))].sort((a, b) =>
+        String(a).localeCompare(String(b), undefined, { numeric: true })
+    ), [labs]);
+    const [view, setView] = useState('table');
+    const [course, setCourse] = useState(courses[0] || '');
+    const selectedCourse = courses.includes(course) ? course : courses[0] || '';
 
-    const getRowId = (row) => {
-        return `${row.course} - ${row.section}`;
-    }
-
-    const deleteLab = (course, section) => () => {
-        // console.log(row);
-        // peerTeachers = peerTeachers.filter(pt => pt.uin !== uin);
-        // setPeerTeachers([...peerTeachers])
-        // setLabs(labs.map((lab) => lab.pt === uin ? { ...lab, assigned: false, pt: undefined } : lab));
-        let temp = labs.filter(lab => lab.course === course && lab.section === section);
-        const lab = temp[0];
-        if (lab.pt !== undefined) {
-            for (const pt of peerTeachers) {
-                if (lab.pt.includes(pt.uin)) {
-                    let updatedPT = pt;
-                    updatedPT.hours -= lab.hours;
-                    updatedPT.labs = updatedPT.labs.filter((elem) => elem.course !== course && elem.section !== section);
-                    // console.log(updatedPT);
-                    setPeerTeachers((prevPeerTeachers) =>
-                        prevPeerTeachers.map((pt) => pt.uin === updatedPT.uin ? updatedPT : pt)
-                    );
-                }
-            }
-        }
-        labs = labs.filter(lab => !(lab.course === course && lab.section === section));
-        setLabs([...labs]);
-    }
+    const deleteLab = (deletedLab) => {
+        setPeerTeachers((current) => current.map((pt) => deletedLab.pt?.includes(pt.uin) ? {
+            ...pt,
+            hours: pt.hours - deletedLab.hours,
+            labs: pt.labs.filter((lab) => lab.course !== deletedLab.course || lab.section !== deletedLab.section),
+        } : pt));
+        setLabs((current) => current.filter((lab) => lab.course !== deletedLab.course || lab.section !== deletedLab.section));
+    };
 
     const processRowUpdate = (updatedRow) => {
-        setLabs(labs.map((lab) => (lab.course === updatedRow.course && lab.section === updatedRow.section) ? updatedRow : lab))
+        setLabs((current) => current.map((lab) =>
+            lab.course === updatedRow.course && lab.section === updatedRow.section ? updatedRow : lab
+        ));
         return updatedRow;
-    }
+    };
+
+    const updateLab = (previousLab, updatedLab) => {
+        setLabs((current) => current.map((lab) => lab === previousLab ? updatedLab : lab));
+        if (!previousLab.pt?.length) return;
+        setPeerTeachers((current) => current.map((pt) => previousLab.pt.includes(pt.uin) ? {
+            ...pt,
+            hours: Number(pt.hours || 0) + Number(updatedLab.hours || 0) - Number(previousLab.hours || 0),
+            labs: (pt.labs || []).map((lab) => lab.course === previousLab.course && lab.section === previousLab.section
+                ? { course: updatedLab.course, section: updatedLab.section }
+                : lab),
+        } : pt));
+    };
+
+    const assignedNames = (uins = []) => peerTeachers
+        .filter((pt) => uins.includes(pt.uin))
+        .map((pt) => `${pt.firstname} ${pt.lastname}`);
 
     const columns = [
-        {
-            field: 'course',
-            headerName: 'Course',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            // minWidth: 80,
-            // maxWidth: 80,
-            width: 80,
-            editable: false,
-        },
-        {
-            field: 'section',
-            headerName: 'Section',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            // minWidth: 80,
-            // maxWidth: 80,
-            width: 80,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            editable: false,
-        },
-        {
-            field: 'time',
-            headerName: 'Time',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            // minWidth: 200,
-            // maxWidth: 450,
-            width: 200,
-            editable: false,
-        },
-        {
-            field: 'location',
-            headerName: 'Location',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            // minWidth: 50,
-            // maxWidth: 150,
-            width: 110,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            editable: false,
-        },
-        {
-            field: 'professor',
-            headerName: 'Professor',
-            type: 'string',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            width: 220,
-            align: 'left',
-            headerAlign: 'left',
-        },
+        { field: 'course', headerName: 'Course', width: 100 },
+        { field: 'section', headerName: 'Section', width: 100 },
+        { field: 'time', headerName: 'Time', minWidth: 210, flex: 1 },
+        { field: 'location', headerName: 'Location', width: 120 },
+        { field: 'professor', headerName: 'Professor', minWidth: 190, flex: 1 },
         {
             field: 'pt',
             headerName: 'Assigned PT(s)',
-            type: 'string',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            width: 300,
-            align: 'left',
-            headerAlign: 'left',
-            valueGetter: (value) => {
-                // console.log(value);
-                if (value.length === 0) {
-                    return 'UNASSIGNED';
-                }
-                let assignedPTs = "";
-                // const temp = peerTeachers.find((pt) => pt.uin === value);
-                for (const pt of peerTeachers) {
-                    // console.log(pt);
-                    if (value.includes(pt.uin)) {
-                        // console.log(pt);
-                        assignedPTs = assignedPTs.concat(`${pt.firstname} ${pt.lastname}\n`);
-                    }
-                }
-                // console.log(assignedPTs);
-                if (assignedPTs.length === 0) {
-                    return 'UNASSIGNED';
-                }
-                return assignedPTs.slice(0, assignedPTs.length-1);
-            },
-            renderCell: (params) => {
-                const textWithLineBreaks = params.value.split('\n').map((line, index) => (
-                    <div key={index}>{line}</div>
-                ));
-                return <div>{textWithLineBreaks}</div>;
-            },
+            minWidth: 190,
+            flex: 1,
+            sortable: false,
+            valueGetter: (value) => assignedNames(value).join('\n') || 'UNASSIGNED',
+            renderCell: ({ value }) => <span className={value === 'UNASSIGNED' ? 'labs-cell--empty' : ''}>{value === 'UNASSIGNED' ? value : value.replace(/\n/g, ', ')}</span>,
         },
-        {
-            field: 'maxPTs',
-            headerName: 'Max PTs',
-            type: 'number',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            width: 80,
-            align: 'left',
-            headerAlign: 'left',
-            editable: true,
-            disableExport: true
-        },
+        { field: 'maxPTs', headerName: 'Max PTs', type: 'number', width: 100, editable: true, disableExport: true },
         {
             field: 'actions',
             type: 'actions',
             headerName: 'Delete',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            maxWidth: 70,
-            cellClassName: 'actions',
-            getActions: ({ id, row }) => {
-                // console.log(row);
-                return [
-                    <GridActionsCellItem
-                        icon={<DeleteIcon />}
-                        label={'Delete'}
-                        onClick={deleteLab(row.course, row.section)}
-                    />
-                ]
-            }
-        }
-    ]
+            width: 82,
+            getActions: ({ row }) => [
+                <GridActionsCellItem key="delete" icon={<DeleteOutlineRoundedIcon />} label={`Delete CSCE ${row.course} - ${row.section}`} onClick={() => deleteLab(row)} />,
+            ],
+        },
+    ];
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%', overflow: 'auto' }}>
-            {/* <strong style={{ fontSize: 24, marginBottom: 16 }}>Labs</strong> */}
-            <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                Labs
-            </Typography>
-            <Box
-                sx={{
-                    // display: 'flex',
-                    // flexDirection: 'column',
-                    // flex: 1,
-                    height: 600,
-                    width: '1000px',
-                    '& .super-app-theme--header': {
-                        backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
-                    },
-                    padding: 0,
-                    margin: 0,
-                    overflow: 'auto',
-                }}
-            >
-                {/* <div style={{ width: '100%', flex: 1 }}> */}
+        <section className="peer-teachers-view labs-view">
+            <header className="view-header labs-view__header">
+                <div>
+                    <Typography component="h1" className="view-title">Labs</Typography>
+                    <Typography className="view-subtitle">{labs.length} sections across {courses.length} courses</Typography>
+                </div>
+                <div className="view-switch" role="tablist" aria-label="Labs view">
+                    {['table', 'calendar', 'edit'].map((option) => (
+                        <button type="button" role="tab" aria-selected={view === option} className={view === option ? 'is-active' : ''} onClick={() => setView(option)} key={option}>
+                            {option[0].toUpperCase() + option.slice(1)}
+                        </button>
+                    ))}
+                </div>
+            </header>
+
+            {view === 'table' ? (
+                <Box className="data-table-shell">
                     <DataGrid
-                        experimentalFeatures={{ ariaV7: true }}
-                        // rows={labs.map((lab, i) => ({...lab, id: i+1}))}
                         rows={labs}
                         columns={columns}
+                        getRowId={(row) => `${row.course}-${row.section}`}
+                        getRowHeight={() => 'auto'}
                         initialState={{
-                            sorting: {
-                                sortModel: [{ field: 'id', sort: 'asc' }]
-                            },
-                            pagination: {
-                                paginationModel: { pageSize: 100 }
-                            }
+                            sorting: { sortModel: [{ field: 'course', sort: 'asc' }] },
+                            pagination: { paginationModel: { pageSize: 100 } },
                         }}
-                        getRowId={getRowId}
-                        getRowHeight={() => 'auto'} // Dynamic Row Height
                         disableColumnMenu
-                        disableExtendRowFullWidth
-                        sx={{
-                            width: '100%', // Ensures DataGrid takes full width
-                            '& .MuiDataGrid-root': {
-                                overflowX: 'hidden' // Ensures no horizontal scrollbar is visible
-                            },
-                            overflowX: 'auto',
-                            // fix cell spacing
-                            '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px', display: 'flex', alignItems: 'center' },
-                            '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px', display: 'flex', alignItems: 'center' },
-                            '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px', display: 'flex', alignItems: 'center' },
-                            '.MuiDataGrid-cell.MuiDataGrid-cell--editing': {
-                                backgroundColor: '#800000', color: '#FFFFF0'
-                            },
-                            '.MuiDataGrid-cell .MuiDataGrid-cell--editing': {
-                                backgroundColor: '#800000', color: '#FFFFF0'
-                            },
-                        }}
-                        disableColumnResize
-                        editMode='cell'
-                        // onCellEditStop={onCellEditStop}
                         processRowUpdate={processRowUpdate}
-                        onProcessRowUpdateError={(error) => console.log(error)}
+                        onProcessRowUpdateError={(error) => console.error(error)}
                         hideFooterSelectedRowCount
                         pageSizeOptions={[100]}
-                        slots={{
-                            toolbar: CustomToolbar
-                        }}
+                        showToolbar
+                        slots={{ toolbar: GridToolbar }}
+                        slotProps={{ toolbar: { csvOptions: {
+                            fileName: 'labs',
+                            fields: ['course', 'section', 'time', 'location', 'professor', 'pt'],
+                        } } }}
+                        sx={{ border: 0 }}
                     />
-                {/* </div> */}
-            </Box>
-        </div>
-    )
-}
+                </Box>
+            ) : view === 'calendar' ? (
+                <section className="labs-calendar-view" aria-labelledby="labs-calendar-title">
+                    <div className="labs-calendar-controls">
+                        <div>
+                            <h2 id="labs-calendar-title">Course Calendar</h2>
+                            <p>{labs.filter((lab) => lab.course === selectedCourse).length} scheduled lab sections</p>
+                        </div>
+                        <label>Course
+                            <select value={selectedCourse} onChange={(event) => setCourse(event.target.value)}>
+                                {courses.map((value) => <option value={value} key={value}>CSCE {value}</option>)}
+                            </select>
+                        </label>
+                    </div>
+                    {selectedCourse ? <LabsCalendar labs={labs} peerTeachers={peerTeachers} course={selectedCourse} /> : <p className="pt-detail__empty">Upload labs to view the calendar.</p>}
+                </section>
+            ) : <div className="labs-edit-view"><LabEditor labs={labs} setLabs={setLabs} onUpdate={updateLab} onRemove={deleteLab} /></div>}
+        </section>
+    );
+};
 
 export default LabsTab;

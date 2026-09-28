@@ -1,0 +1,10 @@
+{
+  "firstname": "Maya",
+  "lastname": "Chen",
+  "uin": "900000101",
+  "desiredLabHours": 3,
+  "classesCanPT": ["120", "221"],
+  "preferredClasses": ["120"],
+  "busyTimes": { "M": ["09:10-10:00"], "T": ["14:20-15:35"], "W": ["09:10-10:00"], "R": ["14:20-15:35"], "F": [] },
+  "professorsHad": { "120": ["Zbigniew Leyk"], "221": [] }
+}

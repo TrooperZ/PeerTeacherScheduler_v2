@@ -1,0 +1,36 @@
+{
+  "firstname": "Mia",
+  "lastname": "Walker",
+  "uin": "900000123",
+  "desiredLabHours": 3,
+  "classesCanPT": [
+    "120",
+    "313"
+  ],
+  "preferredClasses": [
+    "120"
+  ],
+  "busyTimes": {
+    "M": [
+      "13:50-16:40"
+    ],
+    "T": [
+      "10:20-11:35"
+    ],
+    "W": [
+      "13:50-16:40"
+    ],
+    "R": [
+      "10:20-11:35"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "120": [
+      "Tung T. Nguyen"
+    ],
+    "313": [
+      "Sandeep Kumar"
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "firstname": "Caleb",
+  "lastname": "Brown",
+  "uin": "900000110",
+  "desiredLabHours": 5,
+  "classesCanPT": [
+    "206",
+    "221",
+    "312"
+  ],
+  "preferredClasses": [
+    "206",
+    "221"
+  ],
+  "busyTimes": {
+    "M": [
+      "08:00-09:15"
+    ],
+    "T": [
+      "12:45-14:00"
+    ],
+    "W": [
+      "08:00-09:15"
+    ],
+    "R": [
+      "12:45-14:00"
+    ],
+    "F": [
+      "10:20-11:10"
+    ]
+  },
+  "professorsHad": {
+    "206": [
+      "Zbigniew Leyk"
+    ],
+    "221": [
+      "Shinjiro Sueda"
+    ],
+    "312": [
+      "Rabinarayan Mahapatra"
+    ]
+  }
+}

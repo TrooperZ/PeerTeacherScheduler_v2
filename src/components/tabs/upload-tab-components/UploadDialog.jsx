@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import React, { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 const UploadDialog = ({ open, onClose, content, title, UploadButton, peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT }) => {
     const [ loading, setLoading ] = useState(false);
@@ -39,11 +39,11 @@ const UploadDialog = ({ open, onClose, content, title, UploadButton, peerTeacher
                 {
                     Object.entries(content).map(([key, value], index) => {
                         return (
-                            <React.Fragment key={index}>
+                            <Fragment key={index}>
                                 <Typography variant='h6' sx={{ fontWeight: 'bold' }}>{`${key}`}</Typography>
                                 <Typography variant='body1' sx={{ whiteSpace: 'pre-line' }} >{`${value}`}</Typography>
                                 <br />
-                            </React.Fragment>
+                            </Fragment>
                         );
                     })
                 }

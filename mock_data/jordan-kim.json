@@ -1,0 +1,10 @@
+{
+  "firstname": "Jordan",
+  "lastname": "Kim",
+  "uin": "900000106",
+  "desiredLabHours": 4,
+  "classesCanPT": ["206", "221", "312"],
+  "preferredClasses": ["221", "312"],
+  "busyTimes": { "M": ["13:50-16:40"], "T": ["08:25-10:50"], "W": ["13:50-16:40"], "R": ["08:25-10:50"], "F": [] },
+  "professorsHad": { "206": [], "221": ["Teresa Leyk"], "312": ["Amit Merchant"] }
+}

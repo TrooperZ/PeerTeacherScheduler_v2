@@ -1,0 +1,36 @@
+{
+  "firstname": "Nora",
+  "lastname": "Davis",
+  "uin": "900000111",
+  "desiredLabHours": 6,
+  "classesCanPT": [
+    "221",
+    "331"
+  ],
+  "preferredClasses": [
+    "221"
+  ],
+  "busyTimes": {
+    "M": [
+      "13:50-16:40"
+    ],
+    "T": [
+      "10:20-11:35"
+    ],
+    "W": [
+      "13:50-16:40"
+    ],
+    "R": [
+      "10:20-11:35"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "221": [
+      "Shinjiro Sueda"
+    ],
+    "331": [
+      "Shawna Thomas"
+    ]
+  }
+}

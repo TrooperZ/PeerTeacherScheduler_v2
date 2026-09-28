@@ -1,10 +1,8 @@
 import './App.css'
 import Scheduler from './components/Scheduler'
+import PtDataGenerator from './components/PtDataGenerator'
 
-import {Routes, Route} from 'react-router-dom';
-
-// https://v2.vitejs.dev/guide/static-deploy.html#github-pages
-// https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
 
@@ -12,6 +10,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Scheduler />} />
+        <Route path="/pt-data-generator" element={<PtDataGenerator />} />
       </Routes>
     </div>
   );

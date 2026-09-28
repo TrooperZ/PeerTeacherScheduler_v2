@@ -1,187 +1,40 @@
-import VisuallyHiddenInput from '../VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import VisuallyHiddenInput from '../VisuallyHiddenInput';
+import { mergePeerTeachers, parsePeerTeacher } from '../../../../utils/importData';
 
-
-/*
-
-({uin} is used as unique ID)
-peerTeacher = {
-    firstname: string,
-    lastname: string,
-    uin: string,
-    hours: int,
-    busyTimes: {
-        'M': array[string],     // ex. 01:00-14:00
-        'T': array[string],
-        'W': array[string],
-        'R': array[string],
-        'F': array[string],
-        'S': array[string],
-    },
-    labs: array[{ course: string, section: string }]
-}
-
-*/
-
-const PeerTeacherUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, setLoading, setCompleted, setError, selectedPT, setSelectedPT }) => {
-
-    let numFiles = -1;
-
-    const deletePT = (uin) => {
-
-        // console.log(uin);
-        // peerTeachers = peerTeachers.filter(pt => pt.uin !== uin);
-        // setPeerTeachers(() => [...peerTeachers])
-        // setLabs(labs.map((lab) => lab.pt === uin ? { ...lab, assigned: false, pt: undefined } : lab));
-        setPeerTeachers((prevPeerTeachers) => {
-            const updatedPeerTeachers = prevPeerTeachers.filter(pt => pt.uin !== uin);
-            return updatedPeerTeachers;
-        })
-
-        setLabs((prevLabs) => {
-            const updatedLabs = prevLabs.map((lab) => {
-                if (lab.pt.includes(uin)) {
-                    let a = lab.pt.filter((b) => b !== uin);
-                    return { ...lab, pt: a };
-                }
-                return lab;
-            });
-            return updatedLabs;
-        })
-
-        if (selectedPT && uin === selectedPT.uin) {
-            setSelectedPT(null);
-        }
-    }
-
-    const parseFile = (file) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                let pt = { hours: 0 }
-                let text = event.target.result;
-                text = text.trim();
-                const lines = text.split('\n');
-                const ptInfo = lines[0].split(' ');
-                pt.firstname = ptInfo.slice(0, ptInfo.length - 2).join(" ").trim();
-                pt.lastname = ptInfo[ptInfo.length - 2].trim();
-                pt.uin = ptInfo[ptInfo.length - 1].trim();
-
-                const duplicates = [];
-                peerTeachers.forEach((elem) => {
-                    if (elem.uin === pt.uin) {
-                        duplicates.push(elem.uin);
-                    }
-                })
-
-                // console.log(duplicates);
-
-                // for (let i = 0; i < duplicates.length; ++i) {
-                //     deletePT(duplicates[i]);
-                // }
-                duplicates.forEach(deletePT);
-
-                let busyTimes = {
-                    'M': [],
-                    'T': [],
-                    'W': [],
-                    'R': [],
-                    'F': [],
-                }
-                // console.log(lines.slice(1))
-                const rest = lines.slice(1);
-                for (const i in rest) {
-                    const line = rest[i].trim()
-                    if (line.length === 0) {
-                        continue;
-                    }
-                    // console.log(line);
-                    const lineSplit = line.split(' ');
-                    const times = lineSplit.slice(1).join("").trim();
-                    // console.log(lineSplit);
-                    // console.log(times);
-                    const days = lineSplit[0];
-                    for (const i in days) {
-                        const day = days[i].toUpperCase();
-                        // console.log(day);
-                        if (Object.keys(busyTimes).includes(day)) {
-                            busyTimes[day].push(times);
-                        }
-                    }
-                }
-                pt.busyTimes = busyTimes;
-                pt.labs = []
-                setPeerTeachers((prevPeerTeachers) => {
-                    let a = [...prevPeerTeachers, pt]
-                    a.sort((ptA, ptB) => {
-                        let lA = ptA.lastname.toLowerCase();
-                        let lB = ptB.lastname.toLowerCase();
-                        if (lA !== lB) {
-                            // console.log(lA, '<', lB, 'is ', lA < lB);
-                            if (lA < lB) {
-                                return -1;
-                            }
-                            return 1;
-                        }
-                        lA = ptA.firstname.toLowerCase();
-                        lB = ptB.firstname.toLowerCase();
-                        // return ptA.firstname.toLowerCase() < ptB.firstname.toLowerCase();
-                        if (lA < lB) {
-                            return -1;
-                        }
-                        if (lB < lA) {
-                            return 1;
-                        }
-                        return 0;
-                    });
-                    return a;
-                })
-            }
-            catch (e) {
-                setError(true);
-            }
-
-            --numFiles;
-            if (numFiles === 0) {
-                setLoading(false);
-                setCompleted(true);
-            }
-        }
-        reader.readAsText(file);
-    }
-
-    const handleFile = (event) => {
+const PeerTeacherUploadButton = ({ setPeerTeachers, setLabs, setLoading, setCompleted, setError, selectedPT, setSelectedPT }) => {
+    const handleFile = async (event) => {
+        const files = [...event.target.files];
+        event.target.value = '';
+        if (!files.length) return;
         setLoading(true);
+        setCompleted(false);
         setError(false);
-        // console.log(event.target.files)
-        // console.log(event.target.files[0])
-        const files = event.target.files;
-        numFiles = files.length;
-        for (let i = 0; i < files.length; ++i) {
-            if (files[i]) {
-                parseFile(files[i]);
+        let failed = false;
+
+        for (const file of files) {
+            try {
+                const pt = parsePeerTeacher(await file.text());
+                setPeerTeachers((current) => mergePeerTeachers(current, [pt]));
+                if (pt.uin) setLabs((current) => current.map((lab) => ({ ...lab, pt: lab.pt?.filter((uin) => uin !== pt.uin) || [], lockedPTs: lab.lockedPTs?.filter((uin) => uin !== pt.uin) || [] })));
+                if (selectedPT?.uin === pt.uin) setSelectedPT(null);
+            } catch {
+                failed = true;
             }
         }
-    }
+
+        setError(failed);
+        setLoading(false);
+        setCompleted(true);
+    };
 
     return (
-        <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-        >
+        <Button component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<CloudUploadIcon />}>
             Upload Peer Teachers
-            <VisuallyHiddenInput 
-                type="file"
-                onChange={handleFile}
-                multiple
-                accept='.txt'
-            />
+            <VisuallyHiddenInput type="file" onChange={handleFile} multiple accept=".json,.txt,application/json,text/plain" />
         </Button>
-    )
-}
+    );
+};
 
 export default PeerTeacherUploadButton;

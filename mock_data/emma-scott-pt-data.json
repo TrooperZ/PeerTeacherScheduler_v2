@@ -1,0 +1,40 @@
+{
+  "firstname": "Emma",
+  "lastname": "Scott",
+  "uin": "900000129",
+  "desiredLabHours": 4,
+  "classesCanPT": [
+    "111",
+    "221",
+    "312"
+  ],
+  "preferredClasses": [
+    "221"
+  ],
+  "busyTimes": {
+    "M": [
+      "13:50-16:40"
+    ],
+    "T": [
+      "10:20-11:35"
+    ],
+    "W": [
+      "13:50-16:40"
+    ],
+    "R": [
+      "10:20-11:35"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "111": [
+      "Muhammad S. Mahmood"
+    ],
+    "221": [
+      "Teresa Leyk"
+    ],
+    "312": [
+      "Amit Merchant"
+    ]
+  }
+}

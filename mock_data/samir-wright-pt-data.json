@@ -1,0 +1,43 @@
+{
+  "firstname": "Samir",
+  "lastname": "Wright",
+  "uin": "900000128",
+  "desiredLabHours": 3,
+  "classesCanPT": [
+    "206",
+    "313",
+    "331"
+  ],
+  "preferredClasses": [
+    "206",
+    "313"
+  ],
+  "busyTimes": {
+    "M": [
+      "08:00-09:15"
+    ],
+    "T": [
+      "12:45-14:00"
+    ],
+    "W": [
+      "08:00-09:15"
+    ],
+    "R": [
+      "12:45-14:00"
+    ],
+    "F": [
+      "10:20-11:10"
+    ]
+  },
+  "professorsHad": {
+    "206": [
+      "Zbigniew Leyk"
+    ],
+    "313": [
+      "Dmitri Loguinov"
+    ],
+    "331": [
+      "Shawna Thomas"
+    ]
+  }
+}

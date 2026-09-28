@@ -1,0 +1,42 @@
+{
+  "firstname": "Grace",
+  "lastname": "King",
+  "uin": "900000127",
+  "desiredLabHours": 2,
+  "classesCanPT": [
+    "110",
+    "120",
+    "221"
+  ],
+  "preferredClasses": [
+    "221"
+  ],
+  "busyTimes": {
+    "M": [
+      "11:30-12:20",
+      "15:00-16:15"
+    ],
+    "T": [
+      "09:35-10:50"
+    ],
+    "W": [
+      "11:30-12:20",
+      "15:00-16:15"
+    ],
+    "R": [
+      "09:35-10:50"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "110": [
+      "Ki Hwan K. Yum"
+    ],
+    "120": [
+      "Philip C. Ritchey"
+    ],
+    "221": [
+      "Shinjiro Sueda"
+    ]
+  }
+}

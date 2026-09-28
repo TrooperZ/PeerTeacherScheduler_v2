@@ -1,0 +1,10 @@
+{
+  "firstname": "Fatima",
+  "lastname": "Rahman",
+  "uin": "900000103",
+  "desiredLabHours": 5,
+  "classesCanPT": ["120", "312", "313"],
+  "preferredClasses": ["312"],
+  "busyTimes": { "M": ["08:00-11:10"], "T": ["12:45-14:00"], "W": ["08:00-11:10"], "R": ["12:45-14:00"], "F": [] },
+  "professorsHad": { "120": [], "312": ["Amit Merchant"], "313": [] }
+}

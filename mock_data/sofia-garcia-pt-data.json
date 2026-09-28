@@ -1,0 +1,38 @@
+{
+  "firstname": "Sofia",
+  "lastname": "Garcia",
+  "uin": "900000109",
+  "desiredLabHours": 4,
+  "classesCanPT": [
+    "120",
+    "206"
+  ],
+  "preferredClasses": [
+    "120"
+  ],
+  "busyTimes": {
+    "M": [
+      "11:30-12:20",
+      "15:00-16:15"
+    ],
+    "T": [
+      "09:35-10:50"
+    ],
+    "W": [
+      "11:30-12:20",
+      "15:00-16:15"
+    ],
+    "R": [
+      "09:35-10:50"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "120": [
+      "Muhammad S. Mahmood"
+    ],
+    "206": [
+      "Zbigniew Leyk"
+    ]
+  }
+}

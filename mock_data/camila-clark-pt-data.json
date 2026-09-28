@@ -1,0 +1,42 @@
+{
+  "firstname": "Camila",
+  "lastname": "Clark",
+  "uin": "900000121",
+  "desiredLabHours": 6,
+  "classesCanPT": [
+    "221",
+    "312",
+    "313"
+  ],
+  "preferredClasses": [
+    "313"
+  ],
+  "busyTimes": {
+    "M": [
+      "11:30-12:20",
+      "15:00-16:15"
+    ],
+    "T": [
+      "09:35-10:50"
+    ],
+    "W": [
+      "11:30-12:20",
+      "15:00-16:15"
+    ],
+    "R": [
+      "09:35-10:50"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "221": [
+      "Shinjiro Sueda"
+    ],
+    "312": [
+      "Rabinarayan Mahapatra"
+    ],
+    "313": [
+      "Dmitri Loguinov"
+    ]
+  }
+}

@@ -1,207 +1,121 @@
 import { Box, Typography } from '@mui/material';
-import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
-import { Delete as DeleteIcon } from '@mui/icons-material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import PeerTeacherDetail from './PeerTeacherDetail';
 
-const PeerTeachersTab = ({peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT}) => {
+const formatLabs = (labs = []) => labs
+    .map(({ course, section }) => `${course}-${section}`)
+    .join(', ');
 
-    const getRowId = (row) => {
-        return row.uin;
-    }
-
-    const numberFormatter = (num) => {
-        return num.toLocaleString('en-US', {
-            useGrouping: false
-        })
-    }
-
-    const deletePT = (uin) => () => {
-        peerTeachers = peerTeachers.filter(pt => pt.uin !== uin);
-        setPeerTeachers([ ...peerTeachers ])
-        setLabs(labs.map((lab) => {
-            if (lab.pt.includes(uin)) {
-                let a = lab.pt.filter((b) => b !== uin);
-                return {...lab, pt: a};
-            }
-            return lab;
-        }));
-        if (selectedPT && uin === selectedPT.uin) {
-            setSelectedPT(null);
+const PeerTeachersTab = ({ peerTeachers, setPeerTeachers, labs, setLabs, selectedPT, setSelectedPT, setup = false }) => {
+    const processRowUpdate = (updatedRow, originalRow) => {
+        const previous = originalRow;
+        const cleanRow = {
+            ...updatedRow,
+            firstname: updatedRow.firstname.trim(),
+            lastname: updatedRow.lastname.trim(),
+            uin: String(updatedRow.uin).trim(),
+        };
+        if (!cleanRow.firstname || !cleanRow.lastname || !cleanRow.uin) throw new Error('First name, last name, and UIN are required.');
+        if (peerTeachers.some((peerTeacher) => peerTeacher !== previous && peerTeacher.uin === cleanRow.uin)) throw new Error('UINs must be unique.');
+        setPeerTeachers((current) => current.map((peerTeacher) =>
+            (peerTeacher._setupFileId || peerTeacher.uin) === (cleanRow._setupFileId || previous?.uin) ? cleanRow : peerTeacher
+        ));
+        if (previous?.uin && previous.uin !== cleanRow.uin) {
+            setLabs?.((current) => current.map((lab) => ({
+                ...lab,
+                pt: lab.pt?.map((uin) => uin === previous.uin ? cleanRow.uin : uin),
+                lockedPTs: lab.lockedPTs?.map((uin) => uin === previous.uin ? cleanRow.uin : uin),
+            })));
         }
-    }
-
-    const processRowUpdate = (updatedRow) => {
-        setPeerTeachers(peerTeachers.map((pt) => pt.uin === updatedRow.uin ? updatedRow : pt))
-        return updatedRow;
-    }
+        return cleanRow;
+    };
 
     const columns = [
-        {
-            field: 'uin',
-            headerName: 'UIN',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            // minWidth: 50,
-            // maxWidth: 110,
-            width: 130,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            editable: false,
-            // valueFormatter: numberFormatter,
-        },
-        {
-            field: 'firstname',
-            headerName: 'First Name',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            // minWidth: 200,
-            // maxWidth: 200,
-            width: 200,
-            editable: false,
-        },
-        {
-            field: 'lastname',
-            headerName: 'Last Name',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
-            // minWidth: 220,
-            // maxWidth: 220,
-            width: 220,
-            editable: false,
-        },
+        { field: 'uin', headerName: 'UIN', width: 126, editable: true },
+        { field: 'firstname', headerName: 'First Name', minWidth: 150, flex: 0.8, editable: true },
+        { field: 'lastname', headerName: 'Last Name', minWidth: 150, flex: 0.8, editable: true },
         {
             field: 'hours',
             headerName: 'Assigned Hours',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            // minWidth: 150,
-            // maxWidth: 150,
-            width: 150,
             type: 'number',
+            width: 145,
             align: 'left',
             headerAlign: 'left',
-            editable: false,
-            valueFormatter: numberFormatter
+        },
+        {
+            field: 'labs',
+            headerName: 'Labs',
+            minWidth: 260,
+            flex: 1.5,
+            sortable: false,
+            valueGetter: (value) => formatLabs(value),
+            renderCell: ({ value }) => (
+                <span className={value ? 'labs-cell' : 'labs-cell labs-cell--empty'}>
+                    {value || 'No labs assigned'}
+                </span>
+            ),
         },
         {
             field: 'notes',
             headerName: 'Notes',
-            headerClassName: 'super-app-theme--header',
-            // flex: 1,
-            // minWidth: 50,
-            // maxWidth: 150,
-            width: 195,
-            type: 'string',
-            align: 'left',
-            headerAlign: 'left',
+            minWidth: 180,
+            flex: 1,
             editable: true,
+            renderCell: ({ value }) => (
+                <span className={value ? '' : 'notes-cell--empty'}>{value || 'Add a note'}</span>
+            ),
         },
-        {
-            field: 'actions',
-            type: 'actions',
-            headerName: 'Delete',
-            headerClassName: 'super-app-theme--header',
-            // flex: 2,
-            width: 75,
-            cellClassName: 'actions',
-            getActions: ({id, row}) => {
-                return [
-                    <GridActionsCellItem 
-                        icon={<DeleteIcon />}
-                        label={'Delete'}
-                        onClick={deletePT(id)}
-                    />
-                ]
-            }
-        }
-    ]
+    ];
+
+    if (selectedPT) {
+        const currentPeerTeacher = peerTeachers.find(({ uin }) => uin === selectedPT.uin);
+        if (currentPeerTeacher) return <PeerTeacherDetail peerTeacher={currentPeerTeacher} labs={labs} onBack={() => setSelectedPT(null)} />;
+    }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
-            {/* <strong style={{ fontSize: 24, marginBottom: 16}}>
-                Peer Teachers
-            </strong> */}
-            <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                Peer Teachers
-            </Typography>
-            <Box
-                sx={{
-                    // display: 'flex',
-                    // flexDirection: 'column',
-                    // flex: 1,
-                    // width: '100%', 
-                    height: 600,
-                    width: '1000px',
-                    '& .super-app-theme--header': {
-                        backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
-                    },
-                    // '& .MuiDataGrid-cell--editing': {
-                    //     backgroundColor: '#800000', color: '#FFFFF0'
-                    // },
-                    // '& .MuiDataGrid-cellInput': {
-                    //     backgroundColor: '#800000', color: '#FFFFF0', fontWeight: 'bold'
-                    // },
-                    padding: 0,
-                    margin: 0,
-                    overflow: 'auto',
-                }}
-            >
-                {/* <div style={{ width: '100%', flex: 1 }}> */}
-                    <DataGrid 
-                        experimentalFeatures={{ariaV7: true}}
-                        rows={peerTeachers}
-                        columns={columns}
-                        initialState={{
-                            sorting: {
-                                sortModel: [{field: 'lastname', sort: 'asc'}]
+        <section className="peer-teachers-view peer-teachers-table-view">
+            <header className="view-header">
+                <div>
+                    <Typography component="h1" className="view-title">{setup ? 'Configure peer teachers' : 'Peer Teachers'}</Typography>
+                    <Typography className="view-subtitle">
+                        {setup ? 'Double-click a name or UIN to correct it.' : `${peerTeachers.length} ${peerTeachers.length === 1 ? 'Peer Teacher' : 'Peer Teachers'}`}
+                    </Typography>
+                </div>
+            </header>
+
+            <Box className="data-table-shell">
+                <DataGrid
+                    rows={peerTeachers}
+                    columns={columns}
+                    getRowId={(row) => row._setupFileId || row.uin}
+                    getRowHeight={() => 'auto'}
+                    initialState={{
+                        sorting: { sortModel: [{ field: 'lastname', sort: 'asc' }] },
+                        pagination: { paginationModel: { pageSize: 100 } },
+                    }}
+                    disableColumnMenu
+                    processRowUpdate={processRowUpdate}
+                    onCellClick={({ field, row }) => {
+                        if (field !== 'notes') setSelectedPT(row);
+                    }}
+                    onProcessRowUpdateError={(error) => console.error(error)}
+                    hideFooterSelectedRowCount
+                    pageSizeOptions={[100]}
+                    showToolbar
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                        toolbar: {
+                            csvOptions: {
+                                fileName: 'peer-teachers',
+                                fields: ['uin', 'firstname', 'lastname', 'hours', 'notes'],
                             },
-                            pagination: { 
-                                paginationModel: { pageSize: 100 } 
-                            }
-                        }}
-                        getRowId={getRowId}
-                        getRowHeight={() => 'auto'} // Dynamic Row Height
-                        disableColumnMenu
-                        disableExtendRowFullWidth
-                        sx={{
-                            width: '100%', // Ensures DataGrid takes full width
-                            // '& .MuiDataGrid-root': {
-                            //     overflowX: 'hidden' // Ensures no horizontal scrollbar is visible
-                            // },
-                            // fix cell spacing
-                            '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px', display: 'flex', alignItems: 'center' },
-                            '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px', display: 'flex', alignItems: 'center' },
-                            '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px', display: 'flex', alignItems: 'center' },
-                            // idk why this is the one for editing, but okay
-                            // took way too long to find this :|
-                            '.MuiDataGrid-cell.MuiDataGrid-cell--editing': {
-                                backgroundColor: '#800000', color: '#FFFFF0'
-                            },
-                            '.MuiDataGrid-cell .MuiDataGrid-cell--editing': {
-                                backgroundColor: '#800000', color: '#FFFFF0'
-                            },
-                        }}
-                        disableColumnResize
-                        editMode='cell'
-                        // onCellEditStop={onCellEditStop}
-                        processRowUpdate={processRowUpdate}
-                        onProcessRowUpdateError={(error) => console.log(error)}
-                        hideFooterSelectedRowCount
-                        pageSizeOptions={[100]}
-                        slots={{
-                            toolbar: GridToolbar,
-                        }}
-                    />
-                {/* </div> */}
+                        },
+                    }}
+                    sx={{ border: 0 }}
+                />
             </Box>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
 export default PeerTeachersTab;

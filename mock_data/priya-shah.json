@@ -1,0 +1,10 @@
+{
+  "firstname": "Priya",
+  "lastname": "Shah",
+  "uin": "900000105",
+  "desiredLabHours": 3,
+  "classesCanPT": ["110", "111", "120"],
+  "preferredClasses": ["111"],
+  "busyTimes": { "M": ["10:20-13:30"], "T": ["15:55-17:10"], "W": ["10:20-13:30"], "R": ["15:55-17:10"], "F": ["10:20-11:10"] },
+  "professorsHad": { "110": [], "111": ["Muhammad S. Mahmood"], "120": [] }
+}

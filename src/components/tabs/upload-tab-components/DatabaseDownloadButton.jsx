@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { CloudDownload as CloudDownloadIcon } from '@mui/icons-material';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 const DatabaseDownloadButton = ({ peerTeachers, labs }) => {
 

@@ -1,0 +1,44 @@
+{
+  "firstname": "Noah",
+  "lastname": "Williams",
+  "uin": "900000108",
+  "desiredLabHours": 3,
+  "classesCanPT": [
+    "111",
+    "120",
+    "221"
+  ],
+  "preferredClasses": [
+    "120"
+  ],
+  "busyTimes": {
+    "M": [
+      "10:20-11:10"
+    ],
+    "T": [
+      "08:00-09:15",
+      "14:20-15:35"
+    ],
+    "W": [
+      "10:20-11:10"
+    ],
+    "R": [
+      "08:00-09:15",
+      "14:20-15:35"
+    ],
+    "F": [
+      "12:40-13:30"
+    ]
+  },
+  "professorsHad": {
+    "111": [
+      "Muhammad S. Mahmood"
+    ],
+    "120": [
+      "Muhammad S. Mahmood"
+    ],
+    "221": [
+      "Teresa Leyk"
+    ]
+  }
+}

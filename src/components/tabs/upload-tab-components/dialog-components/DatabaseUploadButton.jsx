@@ -1,46 +1,9 @@
 import VisuallyHiddenInput from '../VisuallyHiddenInput';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { addCourseColors } from '../../../../utils/schedule';
 
-const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, setLoading, setCompleted, setError, selectedPT, setSelectedPT }) => {
-
-    const deletePT = (uin) => {
-        setPeerTeachers((prevPeerTeachers) => {
-            const updatedPeerTeachers = prevPeerTeachers.filter(pt => pt.uin !== uin);
-            return updatedPeerTeachers;
-        })
-
-        setLabs((prevLabs) => {
-            const updatedLabs = prevLabs.map((lab) =>
-                lab.pt === uin ? { ...lab, assigned: false, pt: undefined } : lab
-            );
-            return updatedLabs;
-        })
-
-        if (selectedPT && uin === selectedPT.uin) {
-            setSelectedPT(null);
-        }
-    }
-
-    const deleteLab = (lab) => {
-        // console.log(lab);
-        let temp = labs.filter(elem => elem.course === lab.course && elem.section === lab.section);
-        if (temp.pt !== undefined) {
-            setPeerTeachers((prevPeerTeachers) => {
-                let updatedPT = prevPeerTeachers.find(pt => pt.uin === temp.pt);
-                updatedPT.hours -= temp.hours;
-                const updatedPeerTeachers = prevPeerTeachers.map(
-                    (pt) => pt.uin === updatedPT.uin ? updatedPT : pt
-                );
-                return updatedPeerTeachers;
-            })
-        }
-
-        setLabs((prevLabs) => {
-            const updatedLabs = prevLabs.filter(elem => !(elem.course === lab.course && elem.section === lab.section));
-            return updatedLabs;
-        })
-    }
+const DatabaseUploadButton = ({ setPeerTeachers, setLabs, setLoading, setCompleted, setError, setSelectedPT }) => {
 
     const parseFile = (file) => {
         const reader = new FileReader();
@@ -64,7 +27,7 @@ const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, se
                     }
                     return 0;
                 });
-                setLabs(b);
+                setLabs(addCourseColors(b));
 
                 let a = jsonData.peerTeachers;
                 // console.log(a);
@@ -92,7 +55,7 @@ const DatabaseUploadButton = ({ peerTeachers, setPeerTeachers, labs, setLabs, se
                 setPeerTeachers(a);
                 setSelectedPT(null);
             }
-            catch (e) {
+            catch {
                 // console.log(e)
                 setError(true);
             }

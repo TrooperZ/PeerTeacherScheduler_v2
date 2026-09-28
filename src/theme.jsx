@@ -1,159 +1,123 @@
 import { createTheme } from '@mui/material/styles';
 
+const colors = {
+    background: '#17191d',
+    surface: '#202329',
+    surfaceRaised: '#292d34',
+    border: '#353a43',
+    text: '#f5f2f3',
+    muted: '#a9adb5',
+    maroon: '#7b2338',
+    maroonHover: '#932d48',
+};
+
 const theme = createTheme({
+    typography: {
+        fontFamily: 'Lato, sans-serif',
+    },
     palette: {
+        mode: 'dark',
         primary: {
-            main: '#FFFFF0',
+            main: colors.maroon,
+            contrastText: colors.text,
         },
+        background: {
+            default: colors.background,
+            paper: colors.surface,
+        },
+        text: {
+            primary: colors.text,
+            secondary: colors.muted,
+        },
+        divider: colors.border,
+    },
+    shape: {
+        borderRadius: 10,
     },
     components: {
-        MuiPickersDay: {
-            styleOverrides: {
-                root: {
-                    '&.Mui-selected': {
-                        backgroundColor: '#FFFFF0',
-                        '&:hover': {
-                            backgroundColor: '#FFFFF0',
-                        },
-                    },
-                },
-            },
-        },
         MuiButton: {
             styleOverrides: {
-                textPrimary: {
-                    color: '#FFFFF0',
+                root: {
+                    textTransform: 'none',
+                    fontWeight: 650,
+                },
+                containedPrimary: {
+                    '&:hover': { backgroundColor: colors.maroonHover },
                 },
             },
         },
         MuiTab: {
             styleOverrides: {
                 root: {
-                    color: '#FFFFF0',
+                    color: colors.muted,
                     '&.Mui-selected': {
-                        color: '#FFFFF0', // Selected Tab color
-                        backgroundColor: '#800000', // Maroon background for selected Tab
+                        color: colors.text,
+                        backgroundColor: colors.maroon,
                     },
                     '&:hover': {
-                        backgroundColor: '#660000', // Maroon background on hover
+                        color: colors.text,
+                        backgroundColor: colors.surfaceRaised,
                     },
-                }
-            }
+                },
+            },
         },
         MuiDataGrid: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#800000', // Set the DataGrid background to maroon
-                    color: '#FFFFF0', // Set the text color of the DataGrid to light off-white
+                    color: colors.text,
+                    backgroundColor: colors.surface,
+                    borderColor: colors.border,
                 },
                 columnHeaders: {
-                    backgroundColor: '#800000', // Maroon background for column headers
-                    color: '#FFFFF0', // Light off-white text for column headers
-                    '& .MuiDataGrid-columnHeaderTitle': {
-                        fontWeight: 'bold', // Optional: bold column header text
-                    },
+                    color: colors.text,
+                    backgroundColor: colors.surfaceRaised,
+                    '& .MuiDataGrid-columnHeaderTitle': { fontWeight: 700 },
                 },
                 row: {
-                    '&:nth-of-type(odd)': {
-                        backgroundColor: '#5b0000', // Darker maroon for odd rows
-                    },
-                    '&:nth-of-type(even)': {
-                        backgroundColor: '#660000', // Slightly lighter maroon for even rows
-                    },
-                    '&:hover': {
-                        backgroundColor: '#800000', // Maroon background on row hover
-                    },
+                    '&:nth-of-type(odd)': { backgroundColor: colors.surface },
+                    '&:nth-of-type(even)': { backgroundColor: '#24272d' },
+                    '&:hover': { backgroundColor: '#30232a' },
                 },
                 cell: {
-                    color: '#FFFFF0', // Light off-white text color for all cells
-                    '&.Mui-selected': {
-                        backgroundColor: '#8b0000', // Darker maroon for selected cells
-                        color: '#FFFFF0', // Keep light off-white text for selected cells
-                    },
+                    color: colors.text,
+                    borderColor: colors.border,
+                    '&.Mui-selected': { backgroundColor: colors.maroon },
                 },
-                selectedRow: {
-                    backgroundColor: '#8b0000', // Darker maroon for selected row
-                },
-                footer: {
-                    backgroundColor: '#800000', // Maroon background for footer
-                    color: '#FFFFF0', // Light off-white text for footer
-                    '& .MuiDataGrid-footerContainer': {
-                        backgroundColor: '#800000', // Maroon background for the footer container
-                    },
-                    '& .MuiPaginationItem-root': {
-                        color: '#FFFFF0', // Light off-white color for pagination items in footer
-                        '&.Mui-selected': {
-                            backgroundColor: '#8b0000', // Darker maroon for selected pagination items
-                        },
-                        '&:hover': {
-                            backgroundColor: '#5b0000', // Darker maroon for pagination item hover state
-                        },
-                    },
+                footerContainer: {
+                    color: colors.text,
+                    backgroundColor: colors.surfaceRaised,
+                    borderColor: colors.border,
                 },
                 toolbarContainer: {
-                    '& .MuiSvgIcon-root': {
-                        color: '#FFFFF0',
-                    },
-                }
+                    backgroundColor: colors.surfaceRaised,
+                    '& .MuiButton-root, & .MuiSvgIcon-root': { color: colors.text },
+                },
             },
         },
         MuiCard: {
             styleOverrides: {
                 root: {
-                    '& .MuiTypography-root': {
-                        color: '#000000', // Set text color inside Card to black
-                    },
-                    backgroundColor: '#FFFFF0'
-                }
-            }
+                    color: colors.text,
+                    backgroundColor: colors.surfaceRaised,
+                    '& .MuiTypography-root': { color: colors.text },
+                },
+            },
         },
         MuiDialog: {
             styleOverrides: {
-                root: {
-                    '& .MuiTypography-root': {
-                        color: '#000000', // Set text color inside Card to black
-                        backgroundColor: '#FFFFF0'
-                    },
-                },
-                paper: {
-                    backgroundColor: '#FFFFF0', // Set the background color of the dialog content
-                },
-            }
-        },
-        MuiCheckbox: {
-            styleOverrides: {
-                root: {
-                    color: '#000000',
-                }
-            }
-        },
-        MuiButtonBase: {
-            styleOverrides: {
-                root: {
-                    color: '#000000',
-                }
-            }
+                paper: { backgroundColor: colors.surface },
+            },
         },
         MuiSvgIcon: {
             styleOverrides: {
-                root: {
-                    color: '#000000',
-                }
+                root: { color: 'currentColor' },
             },
-        }
-        // Add overrides for other components as needed
+        },
     },
     mixins: {
         MuiDataGrid: {
-            // Pinned columns sections
-            pinnedBackground: '#800000',
-            // Headers, and top & bottom fixed rows
-            containerBackground: '#800000',
-        },
-    },
-    typography: {
-        h5: {
-            color: '#FFFFF0', // Change the color of all text elements
+            pinnedBackground: colors.surfaceRaised,
+            containerBackground: colors.surfaceRaised,
         },
     },
 });

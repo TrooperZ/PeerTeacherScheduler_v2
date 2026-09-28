@@ -1,0 +1,42 @@
+{
+  "firstname": "Leo",
+  "lastname": "Green",
+  "uin": "900000130",
+  "desiredLabHours": 5,
+  "classesCanPT": [
+    "120",
+    "206",
+    "331"
+  ],
+  "preferredClasses": [
+    "331"
+  ],
+  "busyTimes": {
+    "M": [
+      "09:10-11:10"
+    ],
+    "T": [
+      "15:55-17:10"
+    ],
+    "W": [
+      "09:10-11:10"
+    ],
+    "R": [
+      "15:55-17:10"
+    ],
+    "F": [
+      "13:50-14:40"
+    ]
+  },
+  "professorsHad": {
+    "120": [
+      "Zbigniew Leyk"
+    ],
+    "206": [
+      "Zbigniew Leyk"
+    ],
+    "331": [
+      "Paul P. Taele"
+    ]
+  }
+}

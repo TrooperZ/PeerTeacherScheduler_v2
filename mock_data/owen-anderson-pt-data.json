@@ -1,0 +1,40 @@
+{
+  "firstname": "Owen",
+  "lastname": "Anderson",
+  "uin": "900000114",
+  "desiredLabHours": 4,
+  "classesCanPT": [
+    "206",
+    "221"
+  ],
+  "preferredClasses": [
+    "221"
+  ],
+  "busyTimes": {
+    "M": [
+      "10:20-11:10"
+    ],
+    "T": [
+      "08:00-09:15",
+      "14:20-15:35"
+    ],
+    "W": [
+      "10:20-11:10"
+    ],
+    "R": [
+      "08:00-09:15",
+      "14:20-15:35"
+    ],
+    "F": [
+      "12:40-13:30"
+    ]
+  },
+  "professorsHad": {
+    "206": [
+      "Zbigniew Leyk"
+    ],
+    "221": [
+      "Shinjiro Sueda"
+    ]
+  }
+}

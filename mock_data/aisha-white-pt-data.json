@@ -1,0 +1,43 @@
+{
+  "firstname": "Aisha",
+  "lastname": "White",
+  "uin": "900000119",
+  "desiredLabHours": 4,
+  "classesCanPT": [
+    "110",
+    "206",
+    "221"
+  ],
+  "preferredClasses": [
+    "110",
+    "206"
+  ],
+  "busyTimes": {
+    "M": [
+      "09:10-10:00",
+      "13:50-15:05"
+    ],
+    "T": [
+      "11:10-12:25"
+    ],
+    "W": [
+      "09:10-10:00",
+      "13:50-15:05"
+    ],
+    "R": [
+      "11:10-12:25"
+    ],
+    "F": []
+  },
+  "professorsHad": {
+    "110": [
+      "Ki Hwan K. Yum"
+    ],
+    "206": [
+      "Zbigniew Leyk"
+    ],
+    "221": [
+      "Shinjiro Sueda"
+    ]
+  }
+}

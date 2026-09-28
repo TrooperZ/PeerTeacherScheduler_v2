@@ -1,0 +1,10 @@
+{
+  "firstname": "Luis",
+  "lastname": "Martinez",
+  "uin": "900000102",
+  "desiredLabHours": 6,
+  "classesCanPT": ["110", "120", "206"],
+  "preferredClasses": ["110", "206"],
+  "busyTimes": { "M": ["11:30-14:40"], "T": ["08:00-09:15"], "W": ["11:30-14:40"], "R": ["08:00-09:15"], "F": ["10:20-11:10"] },
+  "professorsHad": { "110": [], "120": ["Calvin J. Beideman"], "206": [] }
+}

@@ -1,0 +1,10 @@
+{
+  "firstname": "Ethan",
+  "lastname": "Brooks",
+  "uin": "900000104",
+  "desiredLabHours": 4,
+  "classesCanPT": ["221", "331"],
+  "preferredClasses": ["331"],
+  "busyTimes": { "M": ["15:00-17:00"], "T": ["09:35-12:25"], "W": ["15:00-17:00"], "R": ["09:35-12:25"], "F": ["13:50-14:40"] },
+  "professorsHad": { "221": ["Teresa Leyk"], "331": ["Paul P. Taele"] }
+}
