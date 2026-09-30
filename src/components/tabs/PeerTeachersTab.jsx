@@ -69,7 +69,18 @@ const PeerTeachersTab = ({ peerTeachers, setPeerTeachers, labs, setLabs, selecte
 
     if (selectedPT) {
         const currentPeerTeacher = peerTeachers.find(({ uin }) => uin === selectedPT.uin);
-        if (currentPeerTeacher) return <PeerTeacherDetail peerTeacher={currentPeerTeacher} labs={labs} onBack={() => setSelectedPT(null)} />;
+        if (currentPeerTeacher) return <PeerTeacherDetail peerTeacher={currentPeerTeacher} labs={labs} onBack={() => setSelectedPT(null)} onSaveSettings={(updatedPeerTeacher) => {
+            if (peerTeachers.some((peerTeacher) => peerTeacher.uin !== currentPeerTeacher.uin && peerTeacher.uin === updatedPeerTeacher.uin)) throw new Error('UINs must be unique.');
+            setPeerTeachers((current) => current.map((peerTeacher) => peerTeacher.uin === currentPeerTeacher.uin ? updatedPeerTeacher : peerTeacher));
+            if (updatedPeerTeacher.uin !== currentPeerTeacher.uin) {
+                setLabs?.((current) => current.map((lab) => ({
+                    ...lab,
+                    pt: lab.pt?.map((uin) => uin === currentPeerTeacher.uin ? updatedPeerTeacher.uin : uin),
+                    lockedPTs: lab.lockedPTs?.map((uin) => uin === currentPeerTeacher.uin ? updatedPeerTeacher.uin : uin),
+                })));
+            }
+            setSelectedPT(updatedPeerTeacher);
+        }} />;
     }
 
     return (

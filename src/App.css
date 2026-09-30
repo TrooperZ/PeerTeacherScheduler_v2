@@ -1568,6 +1568,88 @@
   font-weight: 400;
 }
 
+.pt-settings-dialog.MuiPaper-root {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.pt-settings-dialog .MuiDialogTitle-root,
+.pt-settings-dialog .MuiDialogActions-root {
+  padding: 20px 24px;
+}
+
+.pt-settings-dialog .MuiDialogContent-root {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+}
+
+.pt-settings-dialog__hint,
+.pt-settings-dialog small {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.pt-settings-dialog__field,
+.pt-settings-dialog__identity label,
+.pt-settings-dialog__busy label,
+.pt-settings-dialog__professors label {
+  display: grid;
+  gap: 7px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pt-settings-dialog__identity {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pt-settings-dialog input:not([type='checkbox']) {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--text-primary);
+  background: var(--background);
+  font: inherit;
+}
+
+.pt-settings-dialog fieldset {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.pt-settings-dialog legend { padding: 0 5px; font-weight: 700; }
+
+.pt-settings-dialog__courses {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pt-settings-dialog__courses label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+}
+
+.pt-settings-dialog__busy,
+.pt-settings-dialog__professors { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pt-settings-dialog__busy small,
+.pt-settings-dialog__professors small { grid-column: 1 / -1; }
+.pt-settings-dialog__error { margin: 0; color: #ff8a8a; font-size: 13px; font-weight: 700; }
+
 .pt-calendar-section {
   min-width: 0;
 }

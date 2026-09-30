@@ -80,6 +80,13 @@ export const splitBusyRanges = (ranges = []) => ranges
     .map((range) => range.trim())
     .filter(Boolean);
 
+export const normalizeBusyRanges = (ranges = []) => splitBusyRanges(ranges.flatMap((range) => range.split(','))).map((range) => {
+    const parsed = parseRange(range);
+    if (!parsed || parsed.end <= parsed.start) throw new Error(`Use a valid time range, such as 09:00-10:00.`);
+    const toTime = (minutes) => `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+    return `${toTime(parsed.start)}-${toTime(parsed.end)}`;
+});
+
 const rangesOverlap = (a, b) => a.start < b.end && b.start < a.end;
 
 const UNIVERSALLY_ELIGIBLE_COURSES = new Set(['110', '111', '120', '221']);

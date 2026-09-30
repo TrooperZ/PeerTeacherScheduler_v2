@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { addCourseColors, COURSE_COLORS, getLabCompatibility, getPTLabState, isPTEligibleForCourse, layoutOverlappingEvents, parseLabTime, parseRange, splitBusyRanges } from './schedule.js';
+import { addCourseColors, COURSE_COLORS, getLabCompatibility, getPTLabState, isPTEligibleForCourse, layoutOverlappingEvents, normalizeBusyRanges, parseLabTime, parseRange, splitBusyRanges } from './schedule.js';
 
 test('normalizes schedule data for the calendar', () => {
     assert.equal(COURSE_COLORS.length, 32);
@@ -9,6 +9,8 @@ test('normalizes schedule data for the calendar', () => {
     assert.deepEqual(parseRange('1:50-2:40'), { start: 830, end: 880, label: '1:50 PM – 2:40 PM' });
     assert.deepEqual(parseLabTime('TR 02:20 PM - 03:10 PM').days, ['T', 'R']);
     assert.deepEqual(splitBusyRanges(['9:10-10:00&13:50-14:40']), ['9:10-10:00', '13:50-14:40']);
+    assert.deepEqual(normalizeBusyRanges(['9:10-10:00, 1:50 PM-2:40 PM']), ['09:10-10:00', '13:50-14:40']);
+    assert.throws(() => normalizeBusyRanges(['not a time']), /valid time range/);
     assert.equal(addCourseColors([{ course: '221' }, { course: '221' }])[0].color,
         addCourseColors([{ course: '221' }, { course: '221' }])[1].color);
     const grouped = addCourseColors([
