@@ -1,12 +1,21 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { courseRequestOptions, getLabConfigurationOptions, mergePeerTeachers, parseLabs, parsePeerTeacher, parseScheduleDatabase } from './importData.js';
+import { courseRequestOptions, getLabConfigurationOptions, mergePeerTeachers, parseLabs, parsePeerTeacher, parseScheduleDatabase, shouldReplacePeerTeacher } from './importData.js';
 
 test('parses configured PT JSON and replaces duplicate UINs', () => {
     const pt = parsePeerTeacher(JSON.stringify({ firstname: ' Amin ', lastname: ' Karic ', uin: '123', busyTimes: { M: ['09:00-10:00'] } }));
     assert.equal(pt.firstname, 'Amin');
     assert.deepEqual(pt.labs, []);
     assert.equal(mergePeerTeachers([{ firstname: 'Old', lastname: 'Name', uin: '123' }], [pt])[0].firstname, 'Amin');
+});
+
+test('keeps the most recently generated PT profile for duplicate UINs', () => {
+    const older = parsePeerTeacher(JSON.stringify({ firstname: 'Older', lastname: 'Profile', uin: '123', generatedAt: '2026-09-29T12:00:00Z' }));
+    const newer = parsePeerTeacher(JSON.stringify({ firstname: 'Newer', lastname: 'Profile', uin: '123', generatedAt: '2026-09-30T12:00:00Z' }));
+    assert.equal(mergePeerTeachers([newer], [older])[0].firstname, 'Newer');
+    assert.equal(mergePeerTeachers([older], [newer])[0].firstname, 'Newer');
+    assert.equal(shouldReplacePeerTeacher(newer, older), false);
+    assert.equal(shouldReplacePeerTeacher(newer, { ...older, generatedAt: undefined }), false);
 });
 
 test('parses Howdy laboratory meetings', () => {

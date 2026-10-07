@@ -10,14 +10,15 @@ test('builds a stable PT preference submission', () => {
     assert.equal(hasDragIntent(8, 1), true);
 
     const result = buildPtSubmission({
-        firstName: ' Amin ', lastName: ' Karic ', uin: ' 635001568 ', desiredLabHours: '3', canPt: ['221', '120'], wantsPt: ['120'],
+        firstName: ' Amin ', lastName: ' Karic ', uin: ' 635001568 ', generatedAt: '2026-09-30T12:00:00.000Z', desiredLabHours: '3', canPt: ['221', '120'], wantsPt: ['120'],
         busySlots: [{ day: 'T', start: 600, end: 660 }, { day: 'M', start: 540, end: 600 }],
-        professors: { 120: { selected: ['Zbigniew Leyk'], other: '' }, 221: { selected: [], other: 'Other Professor' } },
+        professors: { 120: { selected: ['Zbigniew Leyk'], other: '' }, 221: { selected: [], other: 'Other Professor, Another Professor' } },
     });
 
     assert.deepEqual(result.classesCanPT, ['120', '221']);
     assert.equal(result.uin, '635001568');
+    assert.equal(result.generatedAt, '2026-09-30T12:00:00.000Z');
     assert.equal(result.desiredLabHours, 3);
     assert.deepEqual(result.busyTimes.M, ['09:00-10:00']);
-    assert.deepEqual(result.professorsHad['221'], ['Other Professor']);
+    assert.deepEqual(result.professorsHad['221'], ['Other Professor', 'Another Professor']);
 });

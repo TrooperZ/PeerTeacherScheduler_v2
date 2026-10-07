@@ -110,7 +110,7 @@ const PerLabRules = ({ labs, peerTeachers, rules, disabled, onChange }) => {
     </section>;
 };
 
-const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settings, setSettings, onToggleLock }) => {
+const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settings, setSettings, onToggleLock, onAutoschedule }) => {
     const rules = settings.autoschedulerRules || DEFAULT_AUTOSCHEDULER_RULES;
     const seed = settings.autoschedulerSeed ?? 'schedule-1';
     const labRules = settings.autoschedulerLabRules || [];
@@ -161,6 +161,7 @@ const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settin
                 return;
             }
             window.clearInterval(timer.current);
+            onAutoschedule();
             setLabs(result.labs);
             setPeerTeachers(result.peerTeachers);
             setRun({ status: 'complete', progress: result.openSlots, total: result.openSlots, assignments: result.assignments, skippedSlots: result.skippedSlots, changes: result.changes });

@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import LabsCalendar from './LabsCalendar';
 import LabEditor from '../LabEditor';
+import { downloadLabsWorkbook } from '../../utils/labsWorkbook';
 
 const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
     const courses = useMemo(() => [...new Set(labs.map(({ course }) => course))].sort((a, b) =>
@@ -79,12 +81,15 @@ const LabsTab = ({ peerTeachers, setPeerTeachers, labs, setLabs }) => {
                     <Typography component="h1" className="view-title">Labs</Typography>
                     <Typography className="view-subtitle">{labs.length} sections across {courses.length} courses</Typography>
                 </div>
-                <div className="view-switch" role="tablist" aria-label="Labs view">
-                    {['table', 'calendar', 'edit'].map((option) => (
-                        <button type="button" role="tab" aria-selected={view === option} className={view === option ? 'is-active' : ''} onClick={() => setView(option)} key={option}>
-                            {option[0].toUpperCase() + option.slice(1)}
-                        </button>
-                    ))}
+                <div className="labs-view__actions">
+                    <button className="labs-export" type="button" onClick={() => downloadLabsWorkbook(labs, peerTeachers)} disabled={!labs.length}><DownloadRoundedIcon /> Export Excel</button>
+                    <div className="view-switch" role="tablist" aria-label="Labs view">
+                        {['table', 'calendar', 'edit'].map((option) => (
+                            <button type="button" role="tab" aria-selected={view === option} className={view === option ? 'is-active' : ''} onClick={() => setView(option)} key={option}>
+                                {option[0].toUpperCase() + option.slice(1)}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </header>
 

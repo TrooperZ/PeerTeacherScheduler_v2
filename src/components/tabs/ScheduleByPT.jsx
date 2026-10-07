@@ -63,7 +63,8 @@ const ScheduleByPT = ({ peerTeachers, labs, onAssign, onRemove }) => {
                                     const laneStyle = { ...eventStyle(parsed), '--event-lane': lane, '--event-lane-count': laneCount };
                                     const status = getPTLabState(lab, selectedPT, labs);
                                     const locked = status.state === 'assigned' && lab.lockedPTs?.includes(selectedPT.uin);
-                                    const clickable = status.state === 'available' || status.state === 'assigned-other' || (status.state === 'assigned' && !locked);
+                                    const eligibilityWarning = status.reason === 'Not eligible for this course';
+                                    const clickable = status.state === 'available' || status.state === 'assigned-other' || eligibilityWarning || (status.state === 'assigned' && !locked);
                                     return <button type="button" disabled={!clickable} className={`calendar-event schedule-pt__event schedule-pt__lab is-${status.state}${locked ? ' is-locked' : ''}`} style={{ ...laneStyle, '--event-color': lab.color }} onClick={(event) => {
                                         if (status.state === 'assigned') onRemove(lab, selectedPT);
                                         else if (status.state === 'assigned-other') setEventInfo({ anchorEl: event.currentTarget, day, lab, parsed });

@@ -24,9 +24,10 @@ const WelcomeScreen = ({ onDatabaseLoaded, onStartNew }) => {
             const database = parseScheduleDatabase(await file.text());
 
             onDatabaseLoaded({
-                labs: sortLabs(database.labs),
-                peerTeachers: sortPeerTeachers(database.peerTeachers),
+                labs: database.history ? database.labs : sortLabs(database.labs),
+                peerTeachers: database.history ? database.peerTeachers : sortPeerTeachers(database.peerTeachers),
                 settings: database.settings,
+                history: database.history,
             });
         } catch {
             setError('That file is not a valid Peer Teacher Schedule database.');

@@ -20,6 +20,19 @@ const sortPeerTeachers = (peerTeachers) => [...peerTeachers].sort((a, b) =>
     a.lastname.localeCompare(b.lastname) || a.firstname.localeCompare(b.firstname)
 );
 
+const timestamp = (peerTeacher) => {
+    const value = Date.parse(peerTeacher?.generatedAt);
+    return Number.isNaN(value) ? null : value;
+};
+
+export const shouldReplacePeerTeacher = (current, incoming) => {
+    const currentTimestamp = timestamp(current);
+    const incomingTimestamp = timestamp(incoming);
+    if (incomingTimestamp !== null && currentTimestamp === null) return true;
+    if (incomingTimestamp === null && currentTimestamp !== null) return false;
+    return incomingTimestamp === null || incomingTimestamp >= currentTimestamp;
+};
+
 export const parsePeerTeacher = (text) => {
     const trimmed = text.trim();
     if (!trimmed) throw new Error('The file is empty.');
@@ -27,14 +40,18 @@ export const parsePeerTeacher = (text) => {
     if (trimmed.startsWith('{')) {
         const data = JSON.parse(trimmed);
         if (!data.firstname?.trim() || !data.lastname?.trim()) throw new Error('First and last name are required.');
+        const generatedAt = timestamp(data);
+        const record = { ...data };
+        delete record.generatedAt;
         return {
-            ...data,
+            ...record,
             firstname: data.firstname.trim(),
             lastname: data.lastname.trim(),
             uin: String(data.uin || '').trim(),
             hours: Number(data.hours || 0),
             busyTimes: data.busyTimes || { M: [], T: [], W: [], R: [], F: [] },
             labs: Array.isArray(data.labs) ? data.labs : [],
+            ...(generatedAt !== null ? { generatedAt: new Date(generatedAt).toISOString() } : {}),
         };
     }
 
@@ -60,10 +77,12 @@ export const parsePeerTeacher = (text) => {
     };
 };
 
-export const mergePeerTeachers = (current, additions) => sortPeerTeachers([
-    ...current.filter((pt) => !additions.some((addition) => addition.uin && addition.uin === pt.uin)),
-    ...additions,
-]);
+export const mergePeerTeachers = (current, additions) => sortPeerTeachers([...current, ...additions].reduce((merged, incoming) => {
+    const index = incoming.uin ? merged.findIndex((peerTeacher) => peerTeacher.uin === incoming.uin) : -1;
+    if (index === -1) merged.push(incoming);
+    else if (shouldReplacePeerTeacher(merged[index], incoming)) merged[index] = incoming;
+    return merged;
+}, []));
 
 export const courseRequestOptions = (method, body) => method === 'GET'
     ? { method: 'GET', headers: { Accept: 'application/json' } }

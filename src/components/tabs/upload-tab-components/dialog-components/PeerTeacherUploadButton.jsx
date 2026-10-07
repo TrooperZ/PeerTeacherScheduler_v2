@@ -1,9 +1,9 @@
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import VisuallyHiddenInput from '../VisuallyHiddenInput';
-import { mergePeerTeachers, parsePeerTeacher } from '../../../../utils/importData';
+import { mergePeerTeachers, parsePeerTeacher, shouldReplacePeerTeacher } from '../../../../utils/importData';
 
-const PeerTeacherUploadButton = ({ setPeerTeachers, setLabs, setLoading, setCompleted, setError, selectedPT, setSelectedPT }) => {
+const PeerTeacherUploadButton = ({ peerTeachers, setPeerTeachers, setLabs, setLoading, setCompleted, setError, selectedPT, setSelectedPT }) => {
     const handleFile = async (event) => {
         const files = [...event.target.files];
         event.target.value = '';
@@ -12,18 +12,22 @@ const PeerTeacherUploadButton = ({ setPeerTeachers, setLabs, setLoading, setComp
         setCompleted(false);
         setError(false);
         let failed = false;
+        let nextPeerTeachers = peerTeachers;
 
         for (const file of files) {
             try {
                 const pt = parsePeerTeacher(await file.text());
-                setPeerTeachers((current) => mergePeerTeachers(current, [pt]));
-                if (pt.uin) setLabs((current) => current.map((lab) => ({ ...lab, pt: lab.pt?.filter((uin) => uin !== pt.uin) || [], lockedPTs: lab.lockedPTs?.filter((uin) => uin !== pt.uin) || [] })));
-                if (selectedPT?.uin === pt.uin) setSelectedPT(null);
+                const current = nextPeerTeachers.find((peerTeacher) => peerTeacher.uin === pt.uin);
+                const accepted = !current || shouldReplacePeerTeacher(current, pt);
+                nextPeerTeachers = mergePeerTeachers(nextPeerTeachers, [pt]);
+                if (accepted && pt.uin) setLabs((currentLabs) => currentLabs.map((lab) => ({ ...lab, pt: lab.pt?.filter((uin) => uin !== pt.uin) || [], lockedPTs: lab.lockedPTs?.filter((uin) => uin !== pt.uin) || [] })));
+                if (accepted && selectedPT?.uin === pt.uin) setSelectedPT(null);
             } catch {
                 failed = true;
             }
         }
 
+        setPeerTeachers(nextPeerTeachers);
         setError(failed);
         setLoading(false);
         setCompleted(true);

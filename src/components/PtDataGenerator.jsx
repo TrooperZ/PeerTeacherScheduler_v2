@@ -5,6 +5,8 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import { COURSE_CATALOG } from '../data/courseCatalog';
 import { buildPtSubmission, clamp, hasDragIntent, minutesToTime, PT_DAYS, snapMinutes, timeToMinutes } from '../utils/ptDataGenerator';
+import { parsePeerTeacher } from '../utils/importData';
+import { parseRange, splitBusyRanges } from '../utils/schedule';
 
 const DAY_NAMES = { M: 'Monday', T: 'Tuesday', W: 'Wednesday', R: 'Thursday', F: 'Friday' };
 const START_MINUTE = 8 * 60;
@@ -202,6 +204,8 @@ const PtDataGenerator = () => {
     const [busySlots, setBusySlots] = useState([]);
     const [professors, setProfessors] = useState({});
     const [submitted, setSubmitted] = useState(false);
+    const [loadMessage, setLoadMessage] = useState('');
+    const profileInput = useRef(null);
 
     const toggleCourse = (course, checked) => {
         setCanPt((current) => checked ? [...current, course] : current.filter((value) => value !== course));
@@ -220,6 +224,36 @@ const PtDataGenerator = () => {
                 : (current[course]?.selected || []).filter((value) => value !== professor),
         },
     }));
+
+    const loadProfile = async (event) => {
+        const file = event.target.files[0];
+        event.target.value = '';
+        if (!file) return;
+        try {
+            const profile = parsePeerTeacher(await file.text());
+            const loadedCourses = (profile.classesCanPT || []).map(String).filter((course) => courses.includes(course));
+            setFirstName(profile.firstname);
+            setLastName(profile.lastname);
+            setUin(String(profile.uin || '').replace(/\D/g, '').slice(0, 9));
+            setDesiredLabHours(profile.desiredLabHours ?? '');
+            setCanPt(loadedCourses);
+            setWantsPt((profile.preferredClasses || []).map(String).filter((course) => loadedCourses.includes(course)));
+            setBusySlots(PT_DAYS.flatMap((day) => splitBusyRanges(profile.busyTimes?.[day]).flatMap((range) => {
+                const parsed = parseRange(range);
+                return parsed ? [{ id: crypto.randomUUID(), day, start: parsed.start, end: parsed.end }] : [];
+            })));
+            setProfessors(Object.fromEntries(loadedCourses.map((course) => {
+                const names = profile.professorsHad?.[course] || [];
+                const selected = names.filter((name) => professorsByCourse[course].includes(name));
+                const other = names.filter((name) => !professorsByCourse[course].includes(name)).join(', ');
+                return [course, { selected, hasOther: Boolean(other), other }];
+            })));
+            setSubmitted(false);
+            setLoadMessage(`Loaded ${file.name}. Downloading saves a new timestamp.`);
+        } catch {
+            setLoadMessage('That file is not a valid PT profile.');
+        }
+    };
 
     const download = (event) => {
         event.preventDefault();
@@ -240,6 +274,9 @@ const PtDataGenerator = () => {
                 <section className="pt-generator-intro">
                     <p>Set up your availability</p>
                     <h1>PT Schedule Profile</h1>
+                    <button className="pt-generator-load" type="button" onClick={() => profileInput.current?.click()}>Load saved profile</button>
+                    <input ref={profileInput} hidden type="file" accept=".json,application/json" onChange={loadProfile} />
+                    {loadMessage && <span>{loadMessage}</span>}
                 </section>
 
                 <section className="pt-generator-section" aria-labelledby="name-heading">

@@ -17,10 +17,11 @@ export const timeToMinutes = (time) => {
     return hour * 60 + minute;
 };
 
-export const buildPtSubmission = ({ firstName, lastName, uin, desiredLabHours, canPt, wantsPt, busySlots, professors }) => ({
+export const buildPtSubmission = ({ firstName, lastName, uin, desiredLabHours, canPt, wantsPt, busySlots, professors, generatedAt = new Date().toISOString() }) => ({
     firstname: firstName.trim(),
     lastname: lastName.trim(),
     uin: uin.trim(),
+    generatedAt,
     desiredLabHours: Number(desiredLabHours),
     classesCanPT: [...canPt].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
     preferredClasses: [...wantsPt].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
@@ -33,6 +34,6 @@ export const buildPtSubmission = ({ firstName, lastName, uin, desiredLabHours, c
     ])),
     professorsHad: Object.fromEntries([...canPt].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).map((course) => [
         course,
-        [...(professors[course]?.selected || []), ...(professors[course]?.other?.trim() ? [professors[course].other.trim()] : [])],
+        [...(professors[course]?.selected || []), ...(professors[course]?.other?.split(',').map((name) => name.trim()).filter(Boolean) || [])],
     ])),
 });
