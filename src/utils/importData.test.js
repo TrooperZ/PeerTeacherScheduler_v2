@@ -40,6 +40,13 @@ test('accepts wrapped course-section responses', () => {
     assert.equal(labs[0].course, '221');
 });
 
+test('imports labs from a scheduler database', () => {
+    const lab = { course: '110', section: '500', time: 'TR 02:20 PM - 03:10 PM', hours: 2, pt: [], maxPTs: 1 };
+    const labs = parseLabs(JSON.stringify({ labs: [lab], peerTeachers: [] }));
+    assert.deepEqual({ ...labs[0], color: undefined }, { ...lab, color: undefined });
+    assert.throws(() => parseLabs('{"labs":[{}]}'), /Invalid lab records/);
+});
+
 test('builds editable GET and POST course requests', () => {
     assert.equal(courseRequestOptions('GET', 'not used').body, undefined);
     assert.deepEqual(JSON.parse(courseRequestOptions('POST', '{"termCode":"202631"}').body), { termCode: '202631' });

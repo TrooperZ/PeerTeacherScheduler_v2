@@ -90,6 +90,12 @@ export const courseRequestOptions = (method, body) => method === 'GET'
 
 export const parseLabs = (text, { excludeGalveston = false } = {}) => {
     const response = JSON.parse(text);
+    if (isRecord(response) && Array.isArray(response.labs)) {
+        if (!response.labs.every((lab) => isRecord(lab) && typeof lab.course === 'string' && typeof lab.section === 'string')) {
+            throw new Error('Invalid lab records.');
+        }
+        return addCourseColors(response.labs);
+    }
     const source = Array.isArray(response) ? response : [response.data, response.results, response.sections].find(Array.isArray);
     if (!source) throw new Error('The course response must contain a JSON array.');
     const labs = [];
