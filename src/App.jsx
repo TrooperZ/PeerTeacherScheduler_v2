@@ -10,7 +10,9 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Scheduler />} />
+        <Route path="/index.html" element={<Scheduler />} />
         <Route path="/pt-data-generator" element={<PtDataGenerator />} />
+        <Route path="/pt-data-generator.html" element={<PtDataGenerator />} />
       </Routes>
     </div>
   );

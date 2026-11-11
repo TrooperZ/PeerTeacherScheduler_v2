@@ -1,0 +1,875 @@
+{
+  "labs": [
+    {
+      "course": "110",
+      "section": "500",
+      "professor": "Yum, Ki Hwan K",
+      "time": "TR 02:20 PM - 03:10 PM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "110",
+      "section": "501",
+      "professor": "Yum, Ki Hwan K",
+      "time": "TR 03:30 PM - 04:20 PM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "110",
+      "section": "502",
+      "professor": "Yum, Ki Hwan K",
+      "time": "TR 04:40 PM - 05:30 PM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "110",
+      "section": "503",
+      "professor": "Yum, Ki Hwan K",
+      "time": "TR 08:25 AM - 09:15 AM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "110",
+      "section": "504",
+      "professor": "Yum, Ki Hwan K",
+      "time": "TR 09:35 AM - 10:25 AM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "110",
+      "section": "505",
+      "professor": "Yum, Ki Hwan K",
+      "time": "TR 11:35 AM - 12:25 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "111",
+      "section": "501",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "TR 03:30 PM - 04:20 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "111",
+      "section": "502",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "TR 04:40 PM - 05:30 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "111",
+      "section": "504",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "MW 09:10 AM - 10:00 AM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "111",
+      "section": "503",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "MW 08:00 AM - 08:50 AM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "111",
+      "section": "505",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "MW 11:30 AM - 12:20 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "111",
+      "section": "500",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "TR 02:20 PM - 03:10 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "503",
+      "professor": "Leyk, Zbigniew",
+      "time": "W 01:50 PM - 02:40 PM",
+      "location": "ZACH 582",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "550",
+      "professor": "Tran, Han",
+      "time": "M 12:40 PM - 01:30 PM",
+      "location": "ECRB 302",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "504",
+      "professor": "Leyk, Zbigniew",
+      "time": "W 03:00 PM - 03:50 PM",
+      "location": "ZACH 582",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "505",
+      "professor": "Leyk, Zbigniew",
+      "time": "W 04:10 PM - 05:00 PM",
+      "location": "ZACH 582",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "250",
+      "professor": "Tran, Han",
+      "time": "M 12:40 PM - 01:30 PM",
+      "location": "ECRB 302",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "506",
+      "professor": "Beideman, Calvin J",
+      "time": "M 01:50 PM - 02:40 PM",
+      "location": "ZACH 584",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "507",
+      "professor": "Beideman, Calvin J",
+      "time": "M 03:00 PM - 03:50 PM",
+      "location": "ZACH 584",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "508",
+      "professor": "Beideman, Calvin J",
+      "time": "M 04:10 PM - 05:00 PM",
+      "location": "ZACH 584",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "509",
+      "professor": "Beideman, Calvin J",
+      "time": "M 08:00 AM - 08:50 AM",
+      "location": "ZACH 596",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "200",
+      "professor": "Carlisle, Martin",
+      "time": "W 09:10 AM - 10:00 AM",
+      "location": "ZACH 596",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "510",
+      "professor": "Beideman, Calvin J",
+      "time": "M 09:10 AM - 10:00 AM",
+      "location": "ZACH 596",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "511",
+      "professor": "Beideman, Calvin J",
+      "time": "M 10:20 AM - 11:10 AM",
+      "location": "ZACH 596",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "512",
+      "professor": "Ritchey, Philip Carson",
+      "time": "M 08:00 AM - 08:50 AM",
+      "location": "ZACH 598",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "513",
+      "professor": "Ritchey, Philip Carson",
+      "time": "M 09:10 AM - 10:00 AM",
+      "location": "ZACH 598",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "514",
+      "professor": "Ritchey, Philip Carson",
+      "time": "M 10:20 AM - 11:10 AM",
+      "location": "ZACH 598",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "515",
+      "professor": "Ritchey, Philip Carson",
+      "time": "W 08:00 AM - 08:50 AM",
+      "location": "ZACH 598",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "516",
+      "professor": "Ritchey, Philip Carson",
+      "time": "W 09:10 AM - 10:00 AM",
+      "location": "ZACH 598",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "517",
+      "professor": "Ritchey, Philip Carson",
+      "time": "W 10:20 AM - 11:10 AM",
+      "location": "ZACH 598",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "518",
+      "professor": "Leyk, Zbigniew",
+      "time": "W 01:50 PM - 02:40 PM",
+      "location": "ZACH 584",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "519",
+      "professor": "Leyk, Zbigniew",
+      "time": "W 03:00 PM - 03:50 PM",
+      "location": "ZACH 584",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "520",
+      "professor": "Leyk, Zbigniew",
+      "time": "W 04:10 PM - 05:00 PM",
+      "location": "ZACH 584",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "521",
+      "professor": "Thomas, Shawna",
+      "time": "M 01:50 PM - 02:40 PM",
+      "location": "ZACH 592",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "522",
+      "professor": "Thomas, Shawna",
+      "time": "M 03:00 PM - 03:50 PM",
+      "location": "ZACH 592",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "523",
+      "professor": "Thomas, Shawna",
+      "time": "M 04:10 PM - 05:00 PM",
+      "location": "ZACH 592",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "524",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "W 01:50 PM - 02:40 PM",
+      "location": "ZACH 592",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "525",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "W 03:00 PM - 03:50 PM",
+      "location": "ZACH 592",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "120",
+      "section": "526",
+      "professor": "Mahmood, Muhammad Suleman",
+      "time": "W 04:10 PM - 05:00 PM",
+      "location": "ZACH 592",
+      "hours": 1,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "206",
+      "section": "500",
+      "professor": "Leyk, Zbigniew",
+      "time": "TR 08:25 AM - 09:15 AM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "501",
+      "professor": "Leyk, Teresa",
+      "time": "TR 03:30 PM - 04:20 PM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "503",
+      "professor": "Leyk, Teresa",
+      "time": "MW 04:10 PM - 05:00 PM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "505",
+      "professor": "Leyk, Teresa",
+      "time": "TR 09:35 AM - 10:25 AM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "502",
+      "professor": "Leyk, Teresa",
+      "time": "MW 03:00 PM - 03:50 PM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "504",
+      "professor": "Leyk, Teresa",
+      "time": "TR 08:25 AM - 09:15 AM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "506",
+      "professor": "Leyk, Teresa",
+      "time": "TR 11:35 AM - 12:25 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "500",
+      "professor": "Leyk, Teresa",
+      "time": "TR 02:20 PM - 03:10 PM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "200",
+      "professor": "Sueda, Shinjiro",
+      "time": "TR 12:45 PM - 01:35 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "221",
+      "section": "599",
+      "professor": "Goktas, Unal",
+      "time": "MW 12:40 PM - 01:30 PM",
+      "location": "ONLINE ONLINE",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "312",
+      "section": "501",
+      "professor": "Merchant, Amit",
+      "time": "MW 09:10 AM - 10:00 AM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "312",
+      "section": "503",
+      "professor": "Merchant, Amit",
+      "time": "MW 10:20 AM - 11:10 AM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "312",
+      "section": "500",
+      "professor": "Merchant, Amit",
+      "time": "MW 08:00 AM - 08:50 AM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "312",
+      "section": "504",
+      "professor": "Mahapatra, Rabinarayan",
+      "time": "MW 12:40 PM - 01:30 PM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "312",
+      "section": "505",
+      "professor": "Mahapatra, Rabinarayan",
+      "time": "MW 01:50 PM - 02:40 PM",
+      "location": "ZACH 590",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "312",
+      "section": "599",
+      "professor": "Duysak, Alpaslan",
+      "time": "TR 09:35 AM - 10:25 AM",
+      "location": "ONLINE ONLINE",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "505",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 12:40 PM - 01:30 PM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "506",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 01:50 PM - 02:40 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "507",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 03:00 PM - 03:50 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "508",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 04:10 PM - 05:00 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "509",
+      "professor": "Houngninou, David Kebo",
+      "time": "MW 11:30 AM - 12:20 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "510",
+      "professor": "Houngninou, David Kebo",
+      "time": "MW 12:40 PM - 01:30 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "511",
+      "professor": "Houngninou, David Kebo",
+      "time": "MW 01:50 PM - 02:40 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "503",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 10:20 AM - 11:10 AM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "504",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 11:30 AM - 12:20 PM",
+      "location": "ZACH 592",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "512",
+      "professor": "Houngninou, David Kebo",
+      "time": "MW 03:00 PM - 03:50 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "513",
+      "professor": "Houngninou, David Kebo",
+      "time": "MW 04:10 PM - 05:00 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "514",
+      "professor": "Houngninou, David Kebo",
+      "time": "MW 05:45 PM - 06:35 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "500",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 08:00 AM - 08:50 AM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "501",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 09:10 AM - 10:00 AM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "502",
+      "professor": "Kumar, Sandeep",
+      "time": "MW 10:20 AM - 11:10 AM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "550",
+      "professor": "Wu, Yanlai",
+      "time": "MW 12:40 PM - 01:30 PM",
+      "location": "ECRB 211",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "313",
+      "section": "200",
+      "professor": "Loguinov, Dmitri",
+      "time": "MW 12:40 PM - 01:30 PM",
+      "location": "ZACH 596",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "900",
+      "professor": "Thomas, Shawna",
+      "time": "TR 12:45 PM - 01:35 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "901",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 08:25 AM - 09:15 AM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "902",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 09:35 AM - 10:25 AM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "903",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 11:35 AM - 12:25 PM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "970",
+      "professor": "Thomas, Shawna",
+      "time": "TR 02:20 PM - 03:10 PM",
+      "location": "ZACH 598",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "950",
+      "professor": "Goktas, Unal",
+      "time": "MW 01:50 PM - 02:40 PM",
+      "location": "ECRB 211",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "904",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 12:45 PM - 01:35 PM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "905",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 02:20 PM - 03:10 PM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "906",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 03:30 PM - 04:20 PM",
+      "location": "ZACH 582",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "907",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 08:25 AM - 09:15 AM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "908",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 09:35 AM - 10:25 AM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "909",
+      "professor": "Taele, Paul Piula",
+      "time": "TR 11:35 AM - 12:25 PM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "910",
+      "professor": "Moore, John Michael",
+      "time": "TR 12:45 PM - 01:35 PM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "911",
+      "professor": "Moore, John Michael",
+      "time": "TR 02:20 PM - 03:10 PM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    },
+    {
+      "course": "331",
+      "section": "912",
+      "professor": "Moore, John Michael",
+      "time": "TR 03:30 PM - 04:20 PM",
+      "location": "ZACH 584",
+      "hours": 2,
+      "pt": [],
+      "maxPTs": 1
+    }
+  ],
+  "peerTeachers": []
+}
