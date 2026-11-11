@@ -116,9 +116,6 @@ const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settin
     const labRules = settings.autoschedulerLabRules || [];
     const algorithm = settings.autoschedulerAlgorithm || 'priority';
     const [run, setRun] = useState({ status: 'idle', progress: 0, total: 0, assignments: 0, skippedSlots: 0, changes: [] });
-    const [proposals, setProposals] = useState(null);
-    const signature = JSON.stringify({ labs, peerTeachers, settings });
-    const stale = proposals && proposals.signature !== signature;
 
     const updateRules = (scope, next) => setSettings((current) => ({
         ...current,
@@ -137,18 +134,11 @@ const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settin
     };
 
     const start = () => {
-        const options = { labs, peerTeachers, rules, honorsSections: settings.labConfiguration?.honorsSections, labRules, seed };
-        setProposals({ signature, priority: autoschedule({ ...options, algorithm: 'priority' }), scarcity: autoschedule({ ...options, algorithm: 'scarcity' }) });
-        setRun({ status: 'idle', progress: 0, total: 0, assignments: 0, skippedSlots: 0, changes: [] });
-    };
-
-    const applyProposal = (result) => {
-        if (stale) return;
+        const result = autoschedule({ labs, peerTeachers, rules, honorsSections: settings.labConfiguration?.honorsSections, labRules, seed, algorithm });
         onAutoschedule();
         setLabs(result.labs);
         setPeerTeachers(result.peerTeachers);
         setRun({ status: 'complete', progress: result.openSlots, total: result.openSlots, assignments: result.assignments, skippedSlots: result.skippedSlots, changes: result.changes });
-        setProposals(null);
     };
 
     return <section className="autoscheduler-view">
@@ -156,7 +146,7 @@ const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settin
             <div><span>Scheduling</span><h1>Autoscheduler</h1><p>Fill open lab slots using an editable priority stack. Existing assignments stay in place.</p></div>
             <div className="autoscheduler-view__actions">
                 <label className="autoscheduler-seed"><span>Shuffle seed</span><div><input disabled={run.status === 'running'} value={seed} onChange={(event) => setSettings((current) => ({ ...current, autoschedulerSeed: event.target.value }))} /><button disabled={run.status === 'running'} type="button" onClick={() => setSettings((current) => ({ ...current, autoschedulerSeed: crypto.randomUUID().slice(0, 8) }))}>New seed</button></div></label>
-                <button className="autoscheduler-view__primary" disabled={run.status === 'running' || !labs.length || !peerTeachers.length} type="button" onClick={start}>Preview autoschedule</button>
+                <button className="autoscheduler-view__primary" disabled={run.status === 'running' || !labs.length || !peerTeachers.length} type="button" onClick={start}>Autoschedule</button>
                 <div>
                     <button disabled={run.status === 'running' || !labs.some((lab) => lab.pt?.some((uin) => !lab.lockedPTs?.includes(uin)))} type="button" onClick={() => clearAssignments(false)}>Clear Assignments</button>
                     <button className="is-danger" disabled={run.status === 'running' || !labs.some((lab) => lab.pt?.length)} type="button" onClick={() => clearAssignments(true)}>Clear Assignments and Locked Assignments</button>
@@ -175,19 +165,6 @@ const AutoschedulerTab = ({ labs, setLabs, peerTeachers, setPeerTeachers, settin
                 <span><strong>Algorithm B</strong><small>Scarcity first · fills labs with the fewest available PTs first</small></span>
             </label>
         </fieldset>
-
-        {proposals && <section className="autoscheduler-results" aria-live="polite">
-            <h2>Compare proposals</h2><p>Both proposals start from the current schedule. Review the assignments before applying one.</p>
-            {stale && <p role="alert">The schedule or rules changed. Generate a new preview before applying.</p>}
-            {['priority', 'scarcity'].map((type) => {
-                const result = proposals[type];
-                return <details key={type} open={type === algorithm}><summary>{type === 'priority' ? 'Priority order' : 'Scarcity first'}: {result.assignments} added, {result.skippedSlots} unfilled</summary>
-                    <p>Workload: {result.peerTeachers.map((pt) => `${pt.firstname} ${pt.lastname}: ${pt.hours}${pt.desiredLabHours == null || pt.desiredLabHours === '' ? '' : ` / ${pt.desiredLabHours}`} hours`).join('; ')}</p>
-                    <ul>{result.changes.map((change) => { const pt = result.peerTeachers.find((item) => item.uin === change.uin); return <li key={`${change.course}-${change.section}-${change.uin}`}>CSCE {change.course}-{change.section}: {pt?.firstname} {pt?.lastname}</li>; })}</ul>
-                    <button type="button" disabled={stale || !result.assignments} onClick={() => applyProposal(result)}>Apply {type === 'priority' ? 'priority' : 'scarcity'} proposal</button>
-                </details>;
-            })}
-        </section>}
 
         {run.status !== 'idle' && <section className={`autoscheduler-progress is-${run.status}`} aria-live="polite">
             <div><strong>{run.status === 'running' ? 'Matching peer teachers…' : 'Autoschedule complete'}</strong><span>{run.total ? `${run.progress} of ${run.total} open slots checked` : 'No open slots to schedule'}</span></div>
