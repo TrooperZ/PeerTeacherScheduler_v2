@@ -42,3 +42,10 @@ button:focus-visible {
   outline: 3px solid rgba(143, 49, 76, 0.35);
   outline-offset: 3px;
 }
+
+.schedule-review { padding: 24px; overflow: auto; }
+.schedule-review h2 { margin-top: 28px; }
+.schedule-review table { border-collapse: collapse; width: 100%; max-width: 900px; margin-top: 12px; }
+.schedule-review th, .schedule-review td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #d9dfe5; }
+.schedule-review details { padding: 8px 0; }
+.schedule-review button { padding: 8px 12px; cursor: pointer; }

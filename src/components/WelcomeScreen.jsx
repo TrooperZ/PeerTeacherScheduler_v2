@@ -12,7 +12,7 @@ const sortPeerTeachers = (peerTeachers) => peerTeachers.sort((a, b) =>
     a.lastname.localeCompare(b.lastname) || a.firstname.localeCompare(b.firstname)
 );
 
-const WelcomeScreen = ({ onDatabaseLoaded, onStartNew }) => {
+const WelcomeScreen = ({ onDatabaseLoaded, onStartNew, recovery, onRecover }) => {
     const [error, setError] = useState('');
 
     const handleUpload = async (event) => {
@@ -51,6 +51,8 @@ const WelcomeScreen = ({ onDatabaseLoaded, onStartNew }) => {
                 <button className="database-loader__button" type="button" onClick={onStartNew}>
                     Create a new database
                 </button>
+
+                {Array.isArray(recovery?.labs) && Array.isArray(recovery?.peerTeachers) && <button className="database-loader__button" type="button" onClick={onRecover}>Recover last local session</button>}
 
                 {error && <p className="database-loader__error" role="alert">{error}</p>}
             </section>

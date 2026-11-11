@@ -37,6 +37,7 @@ const parseClock = (value, inferAfternoon = true) => {
     let hour = Number(match[1]);
     const minute = Number(match[2]);
     const suffix = match[3]?.toUpperCase();
+    if (minute > 59 || (suffix ? hour < 1 || hour > 12 : hour > 23)) return null;
     if (suffix === 'PM' && hour < 12) hour += 12;
     if (suffix === 'AM' && hour === 12) hour = 0;
     if (!suffix && inferAfternoon && hour > 0 && hour < 8) hour += 12;

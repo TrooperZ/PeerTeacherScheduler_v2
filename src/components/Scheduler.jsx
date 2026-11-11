@@ -18,6 +18,9 @@ import DiffTab from './tabs/DiffTab';
 import PeerTeachersTab from './tabs/PeerTeachersTab';
 import UploadTab from './tabs/UploadTab';
 import WelcomeScreen from './WelcomeScreen';
+import ReviewTab from './tabs/ReviewTab';
+
+const RECOVERY_KEY = 'pt-scheduler-recovery-v1';
 
 const Scheduler = () => {
     const [mode, setMode] = useState('welcome');
@@ -30,6 +33,31 @@ const Scheduler = () => {
     const historySource = useRef('manual');
     const [selectedPT, setSelectedPT] = useState(null);
     const [selectedLab, setSelectedLab] = useState(null);
+    const [savedSnapshot, setSavedSnapshot] = useState(null);
+    const [recovery] = useState(() => {
+        try { return JSON.parse(localStorage.getItem(RECOVERY_KEY)); } catch { return null; }
+    });
+    const [recoveryError, setRecoveryError] = useState(false);
+    const currentSnapshot = JSON.stringify({ labs, peerTeachers, settings });
+    const dirty = mode === 'setup' ? !!(labs.length || peerTeachers.length) : mode === 'workspace' && currentSnapshot !== savedSnapshot;
+
+    useEffect(() => {
+        if (!dirty) return undefined;
+        const warn = (event) => { event.preventDefault(); event.returnValue = ''; };
+        window.addEventListener('beforeunload', warn);
+        return () => window.removeEventListener('beforeunload', warn);
+    }, [dirty]);
+
+    useEffect(() => {
+        if (mode !== 'workspace') return;
+        const timer = window.setTimeout(() => {
+            try {
+                localStorage.setItem(RECOVERY_KEY, JSON.stringify({ labs, peerTeachers, settings, history, savedSnapshot }));
+                setRecoveryError(false);
+            } catch { setRecoveryError(true); }
+        }, 0);
+        return () => window.clearTimeout(timer);
+    }, [mode, labs, peerTeachers, settings, history, savedSnapshot]);
 
     const totalSlots = labs.reduce((total, lab) => total + Number(lab.maxPTs || 0), 0);
     const filledSlots = labs.reduce((total, lab) => total + (lab.pt?.length || 0), 0);
@@ -68,10 +96,12 @@ const Scheduler = () => {
         link.download = 'database.json';
         link.click();
         URL.revokeObjectURL(url);
+        setSavedSnapshot(currentSnapshot);
     };
 
     const views = [
         ['scheduling', 'Scheduling', AssignmentTurnedInRoundedIcon],
+        ['review', 'Review', AssignmentTurnedInRoundedIcon],
         ['autoscheduler', 'Autoscheduler', AutoAwesomeRoundedIcon],
         ['people', 'Peer teachers', Groups2RoundedIcon],
         ['labs', 'Labs', CalendarMonthRoundedIcon],
@@ -79,7 +109,7 @@ const Scheduler = () => {
         ['data', 'Data', DatabaseRoundedIcon],
     ];
 
-    const loadDatabase = ({ labs: uploadedLabs, peerTeachers: uploadedPeerTeachers, settings: uploadedSettings, history: uploadedHistory }) => {
+    const loadDatabase = ({ labs: uploadedLabs, peerTeachers: uploadedPeerTeachers, settings: uploadedSettings, history: uploadedHistory, savedSnapshot: recoveredSaved }, isRecovery = false) => {
         const nextLabs = addCourseColors(uploadedLabs, uploadedSettings?.labConfiguration);
         const nextSettings = uploadedSettings || { labConfiguration: { separateHonors: true, separateProfessors: false } };
         const snapshot = databaseSnapshot(nextLabs, uploadedPeerTeachers, nextSettings);
@@ -88,12 +118,13 @@ const Scheduler = () => {
         setPeerTeachers(uploadedPeerTeachers);
         setSettings(nextSettings);
         setHistory(loadDatabaseHistory(snapshot, uploadedHistory));
+        setSavedSnapshot(isRecovery ? recoveredSaved ?? null : JSON.stringify(snapshot));
         setSelectedPT(null);
         setSelectedLab(null);
         setMode('workspace');
     };
 
-    if (mode === 'welcome') return <ThemeProvider theme={theme}><WelcomeScreen onDatabaseLoaded={loadDatabase} onStartNew={() => {
+    if (mode === 'welcome') return <ThemeProvider theme={theme}><WelcomeScreen onDatabaseLoaded={loadDatabase} recovery={recovery} onRecover={() => loadDatabase(recovery, true)} onStartNew={() => {
         setLabs([]);
         setPeerTeachers([]);
         previousDatabase.current = null;
@@ -105,7 +136,7 @@ const Scheduler = () => {
         setPeerTeachers={setPeerTeachers}
         labs={labs}
         setLabs={setLabs}
-        onCancel={() => setMode('welcome')}
+        onCancel={() => { if (!dirty || window.confirm('Discard setup changes?')) setMode('welcome'); }}
         onComplete={(database) => {
             const snapshot = databaseSnapshot(database.labs, database.peerTeachers, database.settings);
             previousDatabase.current = snapshot;
@@ -113,6 +144,7 @@ const Scheduler = () => {
             setLabs(database.labs);
             setSettings(database.settings);
             setHistory({ base: snapshot, entries: [] });
+            setSavedSnapshot(null);
             setView('people');
             setMode('workspace');
         }}
@@ -150,10 +182,11 @@ const Scheduler = () => {
                     <span className={openSlots ? 'revamp-status__open' : 'revamp-status__complete'}>
                         {openSlots ? `${openSlots} open ${openSlots === 1 ? 'slot' : 'slots'}` : lockedSlots ? `${lockedSlots} locked ${lockedSlots === 1 ? 'slot' : 'slots'}` : 'Schedule complete'}
                     </span>
-                    <p>Changes stay in browser and must be exported before refreshing/exiting!</p>
+                    <p>{dirty ? 'Unsaved changes. Export JSON before leaving.' : 'Saved to JSON.'} {recoveryError ? 'Local recovery unavailable; export now.' : 'Local recovery is enabled.'}</p>
                 </section>
 
                 <main className="revamp-content" id="main-content">
+                    {view === 'review' && <ReviewTab labs={labs} peerTeachers={peerTeachers} settings={settings} baseline={savedSnapshot ? JSON.parse(savedSnapshot) : null} />}
                     {view === 'scheduling' && (
                         <SchedulingTab
                             peerTeachers={peerTeachers}

@@ -32,6 +32,12 @@ const PeerTeacherDetail = ({ peerTeacher, labs, onBack, onSaveSettings }) => {
         ...(peerTeacher.preferredClasses || []).map(String),
         ...Object.keys(peerTeacher.professorsHad || {}),
     ])].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    const classesCanPT = [...new Set((peerTeacher.classesCanPT || []).map(String))].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    const preferredClasses = [...new Set((peerTeacher.preferredClasses || []).map(String))].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    const professorsHad = Object.entries(peerTeacher.professorsHad || {})
+        .map(([course, names]) => ({ course, names: Array.isArray(names) ? names : [names].filter(Boolean) }))
+        .filter(({ names }) => names.length)
+        .sort((a, b) => a.course.localeCompare(b.course, undefined, { numeric: true }));
 
     const openSettings = () => {
         setSettings({
@@ -106,6 +112,18 @@ const PeerTeacherDetail = ({ peerTeacher, labs, onBack, onSaveSettings }) => {
                     {busyByDay.length ? busyByDay.map(({ day, ranges }) => (
                         <p key={day}>{DAY_NAMES[day]} <span>{ranges.map((range) => parseRange(range)?.label || range).join(', ')}</span></p>
                     )) : <p className="pt-detail__empty">No busy times</p>}
+                </section>
+                <section>
+                    <h2>Can PT for</h2>
+                    {classesCanPT.length ? <p>{classesCanPT.map((course) => `CSCE ${course}`).join(', ')}</p> : <p className="pt-detail__empty">No eligible classes listed</p>}
+                </section>
+                <section>
+                    <h2>Wants to PT for</h2>
+                    {preferredClasses.length ? <p>{preferredClasses.map((course) => `CSCE ${course}`).join(', ')}</p> : <p className="pt-detail__empty">No preferred classes listed</p>}
+                </section>
+                <section>
+                    <h2>Professors previously had</h2>
+                    {professorsHad.length ? professorsHad.map(({ course, names }) => <p key={course}>CSCE {course} <span>{names.join(', ')}</span></p>) : <p className="pt-detail__empty">No professor history listed</p>}
                 </section>
             </div>
 
